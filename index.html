@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QR-PDF</title>
+<meta name="description" content="Añade un código QR con el enlace a un audio MP3 sobre una partitura en PDF. Funciona sin conexión.">
+<style>
+:root{--bg:#eef0f3;--panel:#fff;--line:#d5d9e0;--tx:#1d2330;--mut:#616b7c;--ac:#2456c7;--ac-tx:#fff;--soft:#f4f6f9;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14171d;--panel:#1e222b;--line:#353b47;--tx:#e8ebf0;--mut:#a0a9b8;--ac:#6d97f2;--ac-tx:#0c1220;--soft:#272c36;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 16px 56px}
+.hero{display:grid;grid-template-columns:1fr 1.25fr;gap:36px;align-items:center}
+.tag{font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);font-weight:650}
+h1{font-size:40px;line-height:1.1;margin:6px 0 14px}
+.lead{font-size:18px;color:var(--mut);margin:0 0 22px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-block;padding:10px 16px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--tx);text-decoration:none;font-weight:600}
+.btn:hover{border-color:var(--ac)}
+.btn.primary{background:var(--ac);border-color:var(--ac);color:var(--ac-tx)}
+.shot{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.18);display:block}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.card h2{font-size:16px;margin:0 0 6px}
+.card p{margin:0;color:var(--mut);font-size:15px}
+.steps{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 26px;margin-top:14px}
+.steps h2{font-size:18px;margin:0 0 8px}
+.steps ol{margin:0;padding-left:22px}
+.steps li{margin-bottom:5px}
+footer{margin-top:32px;font-size:14px;color:var(--mut);display:flex;flex-wrap:wrap;gap:6px 18px}
+footer a{color:var(--ac)}
+@media (max-width:760px){.hero{grid-template-columns:1fr}h1{font-size:32px}.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+  <div>
+    <div class="tag">Por Eloi A.A.</div>
+    <h1>QR-PDF</h1>
+    <p class="lead">Pon un código QR con el enlace a tu grabación en MP3 sobre la partitura en PDF. Quien la tenga impresa la escucha con el móvil.</p>
+    <div class="btns">
+      <a class="btn primary" href="QR-PDF.html">Abrir el programa</a>
+      <a class="btn" href="QR-PDF.html" download>Descargar para usar sin conexión</a>
+    </div>
+    <div class="btns" style="margin-top:10px">
+      <a class="btn" href="manual.html">Manual (HTML)</a>
+      <a class="btn" href="manual.pdf">Manual (PDF)</a>
+    </div>
+  </div>
+  <img class="shot" src="img/programa.png" alt="El programa QR-PDF con una partitura abierta y el código QR arriba a la izquierda">
+</section>
+
+<div class="cards">
+  <div class="card"><h2>Sin conexión</h2><p>Un solo archivo HTML. Se abre con doble clic en cualquier navegador.</p></div>
+  <div class="card"><h2>Privado</h2><p>La partitura no sale de tu ordenador: nada se sube a internet.</p></div>
+  <div class="card"><h2>Calidad de imprenta</h2><p>El QR se añade como vector y la partitura no pierde calidad.</p></div>
+</div>
+
+<div class="steps">
+  <h2>Cómo se usa</h2>
+  <ol>
+    <li>Pega el enlace del MP3.</li>
+    <li>Abre o arrastra la partitura en PDF.</li>
+    <li>Coloca el QR donde quieras y ajusta su tamaño.</li>
+    <li>Guarda el PDF: se crea una copia terminada en <code>_QR.pdf</code>.</li>
+  </ol>
+</div>
+
+<footer>
+  <span>QR-PDF · Por Eloi A.A.</span>
+  <a href="https://github.com/eloiaa-hub/QR-para-PDFs">Código en GitHub</a>
+</footer>
+</div>
+</body>
+</html>
