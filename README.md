@@ -46,6 +46,10 @@ Añade un código QR con el enlace a un audio (por ejemplo, un MP3 subido a inte
 - [pdf-lib](https://github.com/Hopding/pdf-lib) 1.17 (MIT): añade el QR al PDF.
 - [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) 2.0 (MIT): genera el código QR.
 
----
+## Licencia
 
-Por Eloi A.A.
+- **Programa** (`QR-PDF.html` e `index.html`): [EUPL-1.2](LICENSE), la Licencia Pública de la Unión Europea. Puedes usarlo, estudiarlo, modificarlo y redistribuirlo. Si distribuyes una versión modificada, debe seguir publicándose con la EUPL o con una licencia compatible.
+- **Manual** (`manual.html`, `manual.pdf` y capturas de `img/`): [CC BY-SA 4.0](LICENSE-manual), Creative Commons Atribución-CompartirIgual 4.0 Internacional. Puedes copiarlo y adaptarlo citando la autoría y compartiendo las obras derivadas con la misma licencia.
+- Las bibliotecas incluidas conservan sus propias licencias (Apache-2.0 y MIT).
+
+© 2026 Eloi A.A.
