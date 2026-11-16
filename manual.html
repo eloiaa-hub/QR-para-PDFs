@@ -65,21 +65,27 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li><a href="#abrir">Cómo abrir el programa</a></li>
 <li><a href="#pasos">Uso en cuatro pasos</a></li>
 <li><a href="#colocar">Mover y cambiar el tamaño del QR</a></li>
+<li><a href="#lote">Varias partituras a la vez</a></li>
+<li><a href="#varios">Varios QR y texto bajo el QR</a></li>
+<li><a href="#avisos">Avisos y comprobación</a></li>
 <li><a href="#opciones">Opciones</a></li>
+<li><a href="#posiciones">Posiciones guardadas</a></li>
+<li><a href="#pegatinas">Hoja de pegatinas</a></li>
 <li><a href="#mp3">Preparar el enlace del MP3</a></li>
 <li><a href="#imprimir">Consejos para imprimir</a></li>
 <li><a href="#problemas">Problemas frecuentes</a></li>
 </ol></div>
 
 <h2 id="que-es">1. Qué es y para qué sirve</h2>
-<p><b>QR-PDF</b> crea un código QR con el enlace a un archivo de audio (por ejemplo, un MP3 subido a internet) y lo coloca sobre una partitura en PDF. Quien tenga la partitura en papel puede escanear el código con el móvil y escuchar la obra.</p>
+<p><b>QR-PDF</b> crea códigos QR con el enlace a un archivo de audio (por ejemplo, un MP3 subido a internet) y los coloca sobre partituras en PDF. Quien tenga la partitura en papel escanea el código con el móvil y escucha la obra.</p>
 <ul>
 <li>Funciona <b>sin conexión</b>: es un único archivo HTML que se abre con el navegador.</li>
-<li><b>Nada se sube a internet</b>: la partitura se queda en tu ordenador.</li>
+<li><b>Nada se sube a internet</b>: las partituras se quedan en tu ordenador.</li>
 <li>El QR se añade como dibujo vectorial, así que se imprime nítido a cualquier tamaño y la partitura <b>no pierde calidad</b>.</li>
 <li>Se guarda siempre una <b>copia nueva</b>; el PDF original no cambia.</li>
+<li>Prepara <b>muchas partituras de una vez</b>, con <b>varios QR</b> en cada una, y comprueba que todos se leen bien.</li>
 </ul>
-<figure><img src="img/programa.png" alt="Ventana del programa con una partitura abierta y el QR arriba a la izquierda"><figcaption>El programa con una partitura abierta. A la izquierda, los ajustes; a la derecha, la vista previa con el QR colocado.</figcaption></figure>
+<figure><img src="img/programa.png" alt="Ventana del programa con tres partituras abiertas y el QR a la izquierda del título"><figcaption>El programa con tres partituras abiertas. A la izquierda, los ajustes; a la derecha, la vista previa con el QR colocado junto al título y el texto «Escuchar» debajo.</figcaption></figure>
 
 <h2 id="abrir">2. Cómo abrir el programa</h2>
 <ul>
@@ -89,67 +95,133 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 
 <h2 id="pasos">3. Uso en cuatro pasos</h2>
 <ol>
-<li><b>Pega el enlace del MP3</b> en «Dirección de internet». El QR aparece al momento en la miniatura. Con «Probar enlace» se abre la dirección en el navegador para comprobar que funciona.</li>
-<li><b>Abre la partitura</b> con «Abrir partitura PDF», con «Elegir archivo» o arrastrando el PDF a la ventana.</li>
-<li><b>Coloca el QR.</b> Aparece arriba a la izquierda, junto al título. Muévelo o cambia su tamaño si hace falta (apartado 4).</li>
+<li><b>Pega el enlace del MP3</b> en el recuadro «QR 1». El QR aparece al momento en la miniatura. Con «Probar enlace» se abre la dirección en el navegador para comprobar que funciona.</li>
+<li><b>Abre la partitura</b> con «Abrir partituras», con «Elegir archivos» o arrastrando el PDF a la ventana.</li>
+<li><b>Coloca el QR.</b> Lo más cómodo es «Junto al título»; también puedes arrastrarlo (apartado 4).</li>
 <li><b>Pulsa «Guardar PDF con el QR».</b> Se descarga una copia con el mismo nombre terminado en <code>_QR.pdf</code>; por ejemplo, <code>sonata.pdf</code> → <code>sonata_QR.pdf</code>.</li>
 </ol>
 <p>Puedes guardar tantas veces como quieras: cada copia parte siempre del PDF original, así que nunca se acumulan dos QR.</p>
 
 <h2 id="colocar">4. Mover y cambiar el tamaño del QR</h2>
-<figure class="narrow"><img src="img/panel.png" alt="Panel de ajustes del programa"><figcaption>Panel de ajustes: enlace, tamaño y posición, opciones y botón de guardar.</figcaption></figure>
 <table>
 <tr><th>Quiero…</th><th>Cómo</th></tr>
-<tr><td>Mover el QR</td><td>Arrástralo sobre la partitura con el ratón o con el dedo.</td></tr>
-<tr><td>Cambiar el tamaño</td><td>Arrastra el punto azul de la esquina, usa la barra «Tamaño del QR» o escribe el «Lado» en mm.</td></tr>
+<tr><td>Ponerlo junto al título</td><td>Botón <b>«Junto al título (automático)»</b>. Busca el texto más grande de la parte de arriba de la primera página y coloca el QR a su izquierda, centrado en altura. Se calcula en cada partitura.</td></tr>
+<tr><td>Mover el QR</td><td>Arrástralo sobre la partitura con el ratón o con el dedo. Si estaba en automático, pasa a posición manual.</td></tr>
+<tr><td>Cambiar el tamaño</td><td>Arrastra el punto azul de la esquina, usa la barra «Tamaño» o escribe el «Lado» en mm.</td></tr>
 <tr><td>Ajuste fino</td><td><kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd> mueven 1 mm; con <kbd>Mayús</kbd> pulsada, 0,1 mm.</td></tr>
 <tr><td>Una posición exacta</td><td>Escribe X e Y en mm: la distancia desde la esquina superior izquierda de la hoja hasta el QR, sin contar el margen blanco.</td></tr>
 <tr><td>Llevarlo a una esquina</td><td>Botones «Arriba izquierda», «Arriba derecha», «Abajo izquierda» y «Abajo derecha».</td></tr>
 <tr><td>Ver mejor</td><td>Botones <b>−</b>, <b>Ajustar</b> y <b>+</b> de la barra superior; <b>‹ ›</b> para cambiar de página.</td></tr>
 </table>
-<p>El programa <b>recuerda la posición, el tamaño y las opciones</b>, así que la siguiente partitura empieza con el QR en el mismo sitio.</p>
+<div class="note">«Junto al título» necesita que el título sea texto. Si la partitura es un escaneado o el título es una imagen, el programa lo avisa y usa la posición manual. En páginas apaisadas o giradas también se usa la posición manual.</div>
+<p>El programa <b>recuerda la posición, el tamaño y las opciones</b>, así que la siguiente vez empieza con el QR en el mismo sitio.</p>
 
-<h2 id="opciones">5. Opciones</h2>
+<h2 id="lote">5. Varias partituras a la vez</h2>
+<p>Abre todas las partituras juntas (selecciónalas a la vez o arrástralas). Cambias de una a otra con la lista de la barra superior; «Quitar» la saca de la lista.</p>
+<h3>Dirección base y {nombre}</h3>
+<p>Si todos los audios están en el mismo sitio, escribe la <b>dirección base</b>, por ejemplo <code>https://miweb.com/audios/</code>. Así no hace falta escribir cada enlace:</p>
+<table>
+<tr><th>En el QR escribes…</th><th>Para <code>Ave Maria.pdf</code> se codifica…</th></tr>
+<tr><td><i>(nada)</i></td><td><code>https://miweb.com/audios/Ave%20Maria.mp3</code></td></tr>
+<tr><td><code>{nombre}_coro.mp3</code></td><td><code>https://miweb.com/audios/Ave%20Maria_coro.mp3</code></td></tr>
+<tr><td><code>himno.mp3</code></td><td><code>https://miweb.com/audios/himno.mp3</code> (el mismo en todas)</td></tr>
+<tr><td><code>https://otra.web/x.mp3</code></td><td>Esa dirección tal cual: la dirección base no se usa</td></tr>
+</table>
+<p><code>{nombre}</code> es el nombre del PDF sin <i>.pdf</i>. Los espacios y las letras como la ñ se convierten solas. Basta con que cada MP3 se llame igual que su partitura.</p>
+<h3>Tabla de enlaces</h3>
+<figure><img src="img/tabla.png" alt="Tabla de enlaces con una fila por partitura"><figcaption>Tabla de enlaces: en gris, el enlace calculado; en negro, uno cambiado a mano solo para esa partitura.</figcaption></figure>
+<ul>
+<li>Muestra el enlace de cada partitura y de cada QR. Escribe en una casilla para usar otro enlace solo en esa partitura; «Borrar los cambios a mano» las vuelve a dejar como estaban.</li>
+<li><b>Importar CSV:</b> carga una lista hecha con una hoja de cálculo. La primera columna es el nombre del PDF y las siguientes, los enlaces de los QR 1, 2… Se aceptan como separador el punto y coma, la coma o el tabulador.</li>
+<li><b>Exportar CSV:</b> guarda la lista de enlaces, útil como registro de qué audio lleva cada partitura.</li>
+</ul>
+<h3>Guardar todas</h3>
+<p>«Guardar las N partituras (ZIP)» crea todas las copias, con el QR en la misma posición, dentro de un solo archivo <code>partituras_QR.zip</code>. Al terminar se muestra un resumen con lo que se ha hecho en cada partitura.</p>
+
+<h2 id="varios">6. Varios QR y texto bajo el QR</h2>
+<figure><img src="img/varios.png" alt="Partitura con dos QR, uno junto al título y otro en la esquina"><figcaption>Dos QR en la misma partitura: «Escuchar» y «Coro». El QR 2 está marcado en rojo porque tapa el nombre del compositor.</figcaption></figure>
+<ul>
+<li><b>«+ Añadir otro QR»</b> (hasta 8) sirve, por ejemplo, para un audio por movimiento o por voz: soprano, contralto, tenor, bajo, acompañamiento…</li>
+<li>Cada QR tiene su <b>enlace</b>, su <b>texto</b> y su <b>página</b>: la primera, la última, todas o una en concreto. Para mover uno, pulsa sobre él en la hoja o en su recuadro de la izquierda.</li>
+<li>El <b>texto</b> se escribe centrado debajo del QR, por ejemplo «Escuchar» o «Soprano». También admite <code>{nombre}</code>. En «Texto y opciones» eliges su tamaño y si lleva delante un <b>icono de altavoz</b>.</li>
+<li>El texto usa la letra Helvetica, que admite acentos, ñ, ç y «·». Los caracteres que no puede escribir se cambian por «?» y el programa avisa.</li>
+</ul>
+
+<h2 id="avisos">7. Avisos y comprobación</h2>
+<ul>
+<li><b>Tapa la partitura:</b> si debajo del QR (o de su margen blanco) hay notas, texto o pentagramas, el QR se marca en rojo y aparece un aviso. Muévelo a una zona en blanco o hazlo más pequeño.</li>
+<li><b>QR solapados:</b> si dos QR se tocan, también se avisa, porque se estropearían el uno al otro.</li>
+<li><b>Comprobación al guardar:</b> con la opción activada, el programa vuelve a leer cada QR del PDF nuevo, como haría un móvil, y confirma que lleva el enlace correcto.</li>
+</ul>
+<figure><img src="img/resultado.png" alt="Resumen tras guardar varias partituras"><figcaption>Resumen al guardar varias partituras: cuántos QR lleva cada una, si se leen bien y los avisos.</figcaption></figure>
+<p>Los avisos no impiden guardar: son para revisar. Si una comprobación sale en rojo, no imprimas esa partitura sin mirarla antes.</p>
+
+<h2 id="opciones">8. Opciones</h2>
 <table>
 <tr><th>Opción</th><th>Qué hace</th></tr>
-<tr><td>Dónde añadirlo</td><td>Solo en la primera página (lo normal), solo en la página que estás viendo o en todas.</td></tr>
+<tr><td>Tamaño del texto</td><td>De 6 a 12 puntos. 7 u 8 pt suele bastar.</td></tr>
+<tr><td>Icono de altavoz</td><td>Dibuja un pequeño altavoz delante del texto.</td></tr>
 <tr><td>Corrección de errores</td><td>Cuanto más alta, mejor se lee aunque el papel se manche o se doble, pero el código tiene más cuadritos. <b>Media (M)</b> suele ir bien.</td></tr>
 <tr><td>Margen blanco</td><td>Espacio limpio alrededor del código, que el móvil necesita para reconocerlo. Lo recomendable son <b>4 módulos</b>. Además tapa lo que haya debajo.</td></tr>
 <tr><td>Clic en pantalla</td><td>Al ver el PDF en el ordenador, hacer clic sobre el QR abre el enlace.</td></tr>
-<tr><td>PNG / SVG</td><td>Guardan solo el QR como imagen, por si quieres usarlo en otro documento.</td></tr>
-<tr><td>Tema</td><td>Cambia entre aspecto claro y oscuro.</td></tr>
-<tr><td>Ayuda</td><td>Abre un resumen de este manual dentro del programa.</td></tr>
+<tr><td>Comprobar al guardar</td><td>Lee de nuevo cada QR del PDF guardado (apartado 7).</td></tr>
+<tr><td>PNG / SVG</td><td>Guardan solo el QR elegido como imagen, por si quieres usarlo en otro documento.</td></tr>
+<tr><td>Tema y Ayuda</td><td>Aspecto claro u oscuro, y un resumen de este manual dentro del programa.</td></tr>
 </table>
 <p>Bajo la miniatura del QR se indica cuánto mide cada cuadrito (módulo). Si es demasiado pequeño para imprimirlo, el programa avisa en amarillo o en rojo.</p>
 
-<h2 id="mp3">6. Preparar el enlace del MP3</h2>
+<h2 id="posiciones">9. Posiciones guardadas</h2>
+<p>Si usas partituras de formatos distintos (por ejemplo, A4 vertical y apaisado, o las de una editorial concreta), guarda cada colocación con un nombre:</p>
+<ol>
+<li>Coloca los QR como quieras.</li>
+<li>Escribe un nombre, por ejemplo <i>Coro SATB</i>, y pulsa <b>Guardar</b>.</li>
+<li>Para recuperarla, elígela en la lista.</li>
+</ol>
+<p>Se guarda la posición, el tamaño, la página y el texto de cada QR, y las opciones de texto, corrección, margen y enlace. Los enlaces solo se guardan si usan <code>{nombre}</code>, porque así sirven para cualquier partitura. Si un QR de la posición guardada no lleva enlace, se mantiene el que ya tuvieras escrito.</p>
+<p>Las posiciones se guardan en el navegador. Con <b>Exportar</b> se descargan todas en un archivo <code>posiciones_QR.json</code> y con <b>Importar</b> se cargan en otro ordenador o navegador.</p>
+
+<h2 id="pegatinas">10. Hoja de pegatinas</h2>
+<p>Para partituras que ya están impresas, «Hoja de pegatinas…» crea un PDF con los QR para imprimir en papel adhesivo y pegar en cada copia.</p>
+<figure><img src="img/pegatinas.png" alt="Ventana de la hoja de pegatinas con la vista previa"><figcaption>Hoja de pegatinas con la plantilla Apli / Avery 3474 y la vista previa.</figcaption></figure>
+<ul>
+<li><b>Plantilla:</b> trae varias medidas habituales de etiquetas A4 y una de papel normal con líneas de corte. Si cambias alguna medida pasa a «Personalizada». Comprueba siempre las medidas con las de la caja de tus etiquetas.</li>
+<li><b>Contenido:</b> una pegatina por cada QR con enlace de cada partitura abierta (o de los QR escritos, si no hay partituras), con el nombre de la partitura y el texto del QR al lado o debajo, según la forma de la etiqueta.</li>
+<li><b>Copias de cada QR:</b> repite cada pegatina las veces que necesites, por ejemplo una por alumno.</li>
+<li><b>Empezar en la etiqueta:</b> para aprovechar una hoja ya empezada. Se cuentan por filas, de izquierda a derecha: en una hoja de 3 columnas, la etiqueta 4 es la primera de la segunda fila.</li>
+</ul>
+<div class="note">Imprime la hoja de pegatinas <b>al 100 %</b> («tamaño real»), sin «ajustar a la página», o las etiquetas no coincidirán con el papel. Haz antes una prueba en papel normal y ponla a contraluz sobre la hoja de etiquetas.</div>
+
+<h2 id="mp3">11. Preparar el enlace del MP3</h2>
 <p>El QR guarda la dirección exacta. Por eso:</p>
 <ul>
 <li><b>El enlace no debe cambiar nunca.</b> Si mueves, borras o renombras el MP3, las copias ya impresas dejarán de funcionar.</li>
-<li>En <b>Google Drive, Dropbox, OneDrive</b> y similares, comparte el archivo con «cualquiera que tenga el enlace». Normalmente se abrirá primero la página del servicio y desde ella se reproduce el audio.</li>
-<li>Un enlace directo al archivo (que termina en <code>.mp3</code>, por ejemplo en tu propia web o en GitHub Pages) hace que el móvil lo reproduzca enseguida.</li>
-<li>Cuanto <b>más corto</b> es el enlace, más sencillo sale el QR y mejor se lee.</li>
-<li>Si escribes la dirección sin <code>https://</code>, el programa lo añade. Los espacios y las letras como la ñ se convierten automáticamente; debajo del campo se muestra lo que se codifica de verdad.</li>
+<li>En <b>Google Drive, Dropbox, OneDrive</b> y similares, comparte el archivo con «cualquiera que tenga el enlace». Normalmente se abrirá primero la página del servicio y desde ella se reproduce el audio. Con estos servicios, la dirección base no sirve: usa la tabla de enlaces o un CSV.</li>
+<li>Un enlace directo al archivo (que termina en <code>.mp3</code>, por ejemplo en tu propia web o en GitHub Pages) hace que el móvil lo reproduzca enseguida, y permite usar la dirección base.</li>
+<li>Cuanto <b>más corto</b> es el enlace, más sencillo sale el QR y mejor se lee. Nombres de archivo cortos y sin espacios ayudan.</li>
+<li>Si escribes la dirección sin <code>https://</code>, el programa lo añade. Debajo de cada QR se muestra lo que se codifica de verdad.</li>
 </ul>
 
-<h2 id="imprimir">7. Consejos para imprimir</h2>
+<h2 id="imprimir">12. Consejos para imprimir</h2>
 <ul>
 <li>Un <b>lado de 20 a 25 mm</b> suele leerse bien con un enlace normal. Si el enlace es largo, agranda el QR hasta que desaparezca el aviso.</li>
-<li>Deja el QR sobre <b>fondo blanco</b> y lejos de pentagramas o texto; el margen blanco ayuda.</li>
-<li>Antes de hacer muchas copias, <b>imprime una y escanéala con el móvil</b>.</li>
+<li>Deja el QR sobre <b>fondo blanco</b> y lejos de pentagramas o texto; el margen blanco y el aviso de tapado te ayudan.</li>
+<li>Antes de hacer muchas copias, <b>imprime una y escanéala con el móvil</b>. La comprobación del programa no sustituye a esta prueba: no ve la impresora ni el papel.</li>
 <li>Si la partitura se va a fotocopiar varias veces, sube la corrección de errores a <b>Alta (Q)</b> y agranda un poco el QR.</li>
 </ul>
-<div class="note">El QR se coloca encima de la partitura y la tapa en esa zona. Si quedara sobre una nota o el título, muévelo antes de guardar.</div>
 
-<h2 id="problemas">8. Problemas frecuentes</h2>
+<h2 id="problemas">13. Problemas frecuentes</h2>
 <table>
 <tr><th>Lo que pasa</th><th>Solución</th></tr>
-<tr><td>«Este PDF está protegido y no se puede modificar»</td><td>El PDF tiene contraseña o restricciones. Quita la protección con el programa que lo creó o guarda una copia sin ella.</td></tr>
-<tr><td>«No se ha podido abrir este PDF»</td><td>El archivo está dañado o no es un PDF. Prueba a exportarlo de nuevo desde el programa de partituras.</td></tr>
+<tr><td>«Está protegido y no se puede modificar»</td><td>El PDF tiene contraseña o restricciones. Quita la protección con el programa que lo creó o guarda una copia sin ella.</td></tr>
+<tr><td>«No se ha podido abrir; puede que esté dañado»</td><td>El archivo está dañado o no es un PDF. Prueba a exportarlo de nuevo desde el programa de partituras.</td></tr>
 <tr><td>«El enlace es demasiado largo»</td><td>Baja la corrección de errores o usa un enlace más corto.</td></tr>
-<tr><td>Aviso de módulos pequeños</td><td>Agranda el QR o acorta el enlace.</td></tr>
+<tr><td>«Todas las partituras tendrán este mismo enlace»</td><td>Has abierto varias partituras y el QR lleva una dirección fija. Usa la dirección base, <code>{nombre}</code> o la tabla de enlaces.</td></tr>
+<tr><td>El QR sale en rojo</td><td>Tapa parte de la partitura o se solapa con otro QR. Muévelo o hazlo más pequeño.</td></tr>
+<tr><td>«Título no encontrado, posición manual»</td><td>El título no es texto (escaneado o imagen) o la página está girada. Coloca ese QR a mano.</td></tr>
+<tr><td>La comprobación dice que un QR no se lee bien</td><td>Suele deberse a módulos muy pequeños, poco margen o un QR tapado por otro. Agranda el QR, sube el margen o sepáralo.</td></tr>
 <tr><td>El móvil lee el QR pero el audio no se abre</td><td>Revisa que el archivo esté compartido públicamente y que el enlace no haya cambiado. Comprueba con «Probar enlace».</td></tr>
-<tr><td>No veo el QR en la página</td><td>Está configurado para otra página: lo indica un aviso arriba. Cambia «Dónde añadirlo» o vuelve a la primera página.</td></tr>
+<tr><td>No veo el QR en la página</td><td>Ese QR está asignado a otra página. Lo indica un aviso arriba; cambia su página en el recuadro del QR.</td></tr>
+<tr><td>Las pegatinas no coinciden con las etiquetas</td><td>Imprime al 100 % y revisa las medidas de la plantilla con las de la caja.</td></tr>
 </table>
 
 <footer>QR-PDF · © 2026 Eloi A.A. · <a href="https://github.com/eloiaa-hub/QR-para-PDFs">github.com/eloiaa-hub/QR-para-PDFs</a><br>Este manual se publica con licencia <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)</a>. El programa QR-PDF se distribuye con licencia <a href="https://interoperable-europe.ec.europa.eu/collection/eupl/eupl-text-eupl-12">EUPL-1.2</a>.</footer>

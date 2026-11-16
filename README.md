@@ -9,20 +9,26 @@ Añade un código QR con el enlace a un audio (por ejemplo, un MP3 subido a inte
 ## Características
 
 - **Sin conexión:** es un único archivo HTML (`QR-PDF.html`). Se descarga y se abre con doble clic, sin instalar nada.
-- **Privado:** la partitura no sale del ordenador.
-- **Vista previa:** el QR se mueve con el ratón o el dedo, se redimensiona y se coloca con precisión en milímetros o con las flechas del teclado.
-- **Calidad de imprenta:** el QR se añade como dibujo vectorial; el resto del PDF no se modifica ni pierde calidad.
-- **Se guarda como copia** (`nombre_QR.pdf`); el original no cambia.
-- **Opciones:** el QR va en la primera página, en la página actual o en todas. Se pueden ajustar la corrección de errores y el margen blanco, el QR se puede pulsar como enlace al ver el PDF en pantalla y también se exporta solo el QR en PNG o SVG.
-- **Avisos:** indica si el QR queda demasiado pequeño para imprimirlo o si el enlace es demasiado largo.
-- **Aspecto:** tema claro y oscuro, y ayuda integrada.
+- **Privado:** las partituras no salen del ordenador.
+- **Calidad de imprenta:** el QR se añade como dibujo vectorial; el resto del PDF no se modifica ni pierde calidad. Se guarda siempre una copia (`nombre_QR.pdf`) y el original no cambia.
+- **Vista previa:** el QR se arrastra, se redimensiona y se coloca con precisión en milímetros o con las flechas del teclado.
+- **Junto al título:** coloca el QR automáticamente a la izquierda del título de cada partitura.
+- **Varias partituras a la vez:** se pueden abrir muchas juntas y guardarlas en un ZIP con el QR en la misma posición.
+- **Dirección base y `{nombre}`:** cada partitura enlaza sola con su audio (`Ave Maria.pdf` → `…/audios/Ave%20Maria.mp3`). Una tabla de enlaces permite cambiar el de una sola partitura, e importar o exportar la lista en CSV.
+- **Varios QR por partitura:** hasta 8 (por movimiento, por voz…), cada uno con su enlace, su texto y su página (primera, última, todas o una concreta).
+- **Texto bajo el QR:** por ejemplo «Escuchar» o «Soprano», con un icono de altavoz si se quiere.
+- **Avisos:** marca en rojo los QR que tapan notas, texto o pentagramas, o que se solapan entre sí, y avisa si el QR queda demasiado pequeño.
+- **Comprobación:** al guardar vuelve a leer cada QR del PDF nuevo y confirma que lleva el enlace correcto.
+- **Posiciones guardadas:** guarda colocaciones con nombre («A4 vertical», «Coro SATB»…) y llévalas a otro ordenador con un archivo JSON.
+- **Hoja de pegatinas:** crea un PDF con los QR para papel adhesivo, con plantillas habituales (Apli / Avery) o medidas propias.
+- **Otros:** el QR puede abrir el enlace al pulsarlo en pantalla, se exporta en PNG o SVG, hay tema claro y oscuro, y ayuda integrada.
 
 ## Uso rápido
 
-1. Pega el enlace del MP3.
-2. Abre o arrastra la partitura en PDF.
-3. Coloca el QR (por defecto, arriba a la izquierda del título).
-4. Pulsa **Guardar PDF con el QR**.
+1. Pega el enlace del MP3 (o escribe la dirección base si vas a hacer varias partituras).
+2. Abre o arrastra las partituras en PDF.
+3. Coloca el QR, por ejemplo con **Junto al título**.
+4. Pulsa **Guardar PDF con el QR** o **Guardar las partituras (ZIP)**.
 
 ## Manual
 
@@ -45,6 +51,7 @@ Añade un código QR con el enlace a un audio (por ejemplo, un MP3 subido a inte
 - [PDF.js](https://github.com/mozilla/pdf.js) 3.11 (Apache-2.0): muestra la partitura.
 - [pdf-lib](https://github.com/Hopding/pdf-lib) 1.17 (MIT): añade el QR al PDF.
 - [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) 2.0 (MIT): genera el código QR.
+- [jsQR](https://github.com/cozmo/jsQR) 1.4 (Apache-2.0): lee los QR del PDF guardado para comprobarlos.
 
 ## Licencia
 
