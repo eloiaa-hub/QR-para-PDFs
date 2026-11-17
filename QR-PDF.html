@@ -53,6 +53,15 @@ code{font-size:12px;background:var(--soft);padding:0 3px;border-radius:3px}
 .slotHead .x{padding:1px 7px;font-size:12px}
 .slot .row{margin-top:6px}
 .slot .pgn{width:64px;flex:none}
+.slotHead .typ{width:auto;padding:2px 4px;font-size:12.5px;margin-left:4px}
+.flds{display:grid;grid-template-columns:1fr;gap:5px}
+.flds .fld{min-width:0}
+.flds .fld.wide{grid-column:1/-1}
+.flds label{font-size:11.5px;color:var(--mut);margin:0 0 1px}
+.flds input,.flds select,.flds textarea{width:100%;padding:4px 6px;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--tx)}
+.flds textarea{resize:vertical;min-height:38px}
+.flds input[type=checkbox]{width:auto;padding:0}
+.flds .check span{font-size:13px;color:var(--tx)}
 .viewer{flex:1;display:flex;flex-direction:column;min-width:0}
 .bar{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
 .bar input[type=number]{width:60px;padding:4px 6px}
@@ -117,7 +126,7 @@ kbd{font:inherit;font-size:12px;padding:0 5px;border:1px solid var(--line);borde
 <main>
 <aside>
   <section>
-    <h2>1. Enlaces</h2>
+    <h2>1. Contenido de los QR</h2>
     <div class="field">
       <label for="base">Dirección base de los audios <span class="opt">(opcional)</span></label>
       <input id="base" type="url" placeholder="https://miweb.com/audios/" autocomplete="off" spellcheck="false">
@@ -160,7 +169,7 @@ kbd{font:inherit;font-size:12px;padding:0 5px;border:1px solid var(--line);borde
     <div class="row field">
       <div><label for="labelPt">Tamaño del texto</label>
         <select id="labelPt"><option value="6">6 pt</option><option value="7">7 pt</option><option value="8">8 pt</option><option value="9">9 pt</option><option value="10">10 pt</option><option value="12">12 pt</option></select></div>
-      <div><label>&nbsp;</label><label class="check" style="margin:6px 0 0"><input type="checkbox" id="icon"> <span>Icono de altavoz</span></label></div>
+      <div><label>&nbsp;</label><label class="check" style="margin:6px 0 0"><input type="checkbox" id="icon"> <span>Icono de altavoz (QR de enlace)</span></label></div>
     </div>
     <div class="row field">
       <div><label for="ec">Corrección de errores</label>
@@ -278,6 +287,14 @@ kbd{font:inherit;font-size:12px;padding:0 5px;border:1px solid var(--line);borde
       <li>«+ Añadir otro QR» sirve, por ejemplo, para un audio por movimiento o por voz (soprano, contralto…).</li>
       <li>Cada QR tiene su enlace, su texto y su página (primera, última, todas o una en concreto). Pulsa un QR para elegirlo y moverlo.</li>
       <li>El <b>texto</b> se escribe debajo del QR, con un icono de altavoz si quieres. También admite <code>{nombre}</code>.</li>
+    </ul>
+    <h3>Tipos de QR</h3>
+    <ul>
+      <li>En el desplegable de cada QR eliges qué lleva: <b>enlace web</b> (lo normal para el audio), <b>texto</b>, <b>wifi</b>, <b>contacto</b>, <b>correo</b>, <b>teléfono</b>, <b>SMS</b>, <b>WhatsApp</b>, <b>ubicación</b> o <b>evento</b> de calendario.</li>
+      <li>Rellena los datos y debajo verás exactamente lo que se codifica. En los campos de texto también vale <code>{nombre}</code>.</li>
+      <li>La dirección base, la tabla de enlaces y el icono de altavoz solo se aplican a los QR de enlace web.</li>
+      <li>«Probar» abre el correo, el teléfono, WhatsApp o el mapa; en contacto y evento descarga el archivo (.vcf o .ics) para que lo abras.</li>
+      <li>La contraseña del wifi no se guarda en el navegador: hay que escribirla cada vez que abras el programa.</li>
     </ul>
     <h3>Mover y cambiar el tamaño</h3>
     <ul>
@@ -12769,7 +12786,7 @@ function download(blob,name){
 }
 
 /* ================= Ajustes ================= */
-function defSlot(i){return {pattern:'',label:'',x:12+i*28,y:10,size:20,page:'first',pageN:1,auto:false}}
+function defSlot(i){return {type:'url',data:{},pattern:'',label:'',x:12+i*28,y:10,size:20,page:'first',pageN:1,auto:false}}
 var TPL={
   '3474':{n:'Apli / Avery 3474 · 24 por hoja (70 × 37 mm)',page:'A4',cols:3,rows:8,w:70,h:37,top:0.5,left:0,gx:0,gy:0},
   'L7160':{n:'Avery L7160 · 21 por hoja (63,5 × 38,1 mm)',page:'A4',cols:3,rows:7,w:63.5,h:38.1,top:15.15,left:7.21,gx:2.54,gy:0},
@@ -12792,7 +12809,7 @@ try{
   if(sv.sel>=0&&sv.sel<S.slots.length)S.sel=sv.sel;
 }catch(e){}
 function generic(p){return (p||'').indexOf('{nombre}')>=0}
-function slotsToStore(){return S.slots.map(function(s){var o=Object.assign({},s);if(!generic(o.pattern))o.pattern='';return o})}
+function slotsToStore(){return S.slots.map(function(s){var o=Object.assign({},s);if(!generic(o.pattern))o.pattern='';o.data=Object.assign({},s.data);delete o.data.pass;return o})}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify({base:S.base,slots:slotsToStore(),sel:S.sel,ec:S.ec,margin:S.margin,link:S.link,labelPt:S.labelPt,icon:S.icon,verify:S.verify,peg:S.peg}))}catch(e){}}
 try{var th=localStorage.getItem('qr_partitura_tema');if(th)document.documentElement.dataset.theme=th;else if(matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.dataset.theme='dark'}catch(e){}
 $('theme').onclick=function(){var d=document.documentElement,t=d.dataset.theme==='dark'?'light':'dark';d.dataset.theme=t;try{localStorage.setItem('qr_partitura_tema',t)}catch(e){}};
@@ -12853,10 +12870,83 @@ function svgPath(qr,off){off=off||0;return qr.loops.map(function(l){return 'M'+l
 function svgMarkup(qr,m){var t=qr.n+2*m;return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+t+' '+t+'" shape-rendering="crispEdges"><rect width="'+t+'" height="'+t+'" fill="#fff"/><path d="'+svgPath(qr,m)+'" fill="#000"/></svg>'}
 var ICON_SVG='<svg viewBox="0 0 1 1" xmlns="http://www.w3.org/2000/svg"><path d="M0 .32H.24L.52 .08V.92L.24 .68H0Z" fill="#000"/><path d="M.66 .33C.75 .42 .75 .58 .66 .67M.78 .2C.95 .38 .95 .62 .78 .8" fill="none" stroke="#000" stroke-width=".085" stroke-linecap="round"/></svg>';
 
+/* ================= Tipos de QR ================= */
+function F(k,l,o){return Object.assign({k:k,l:l},o||{})}
+function wEsc(v){return String(v).replace(/([\\;,:"])/g,'\\$1')}
+function vEsc(v){return String(v).replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/([,;])/g,'\\$1')}
+function phone(v){return String(v||'').replace(/[^\d+]/g,'')}
+function icsDate(v){var m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(v||'');return m?m[1]+m[2]+m[3]+'T'+m[4]+m[5]+'00':''}
+var TYPES={
+  url:{n:'Enlace web'},
+  text:{n:'Texto',f:[F('text','Texto',{area:1})],
+    build:function(d){return d.text?{t:d.text}:{need:'Escribe el texto.'}}},
+  wifi:{n:'Wifi',f:[F('ssid','Nombre de la red'),F('sec','Seguridad',{opts:[['WPA','WPA / WPA2 / WPA3'],['WEP','WEP (antigua)'],['nopass','Sin contraseña']]}),F('pass','Contraseña',{ph:'No se guarda en el navegador'}),F('hidden','Red oculta',{check:1})],
+    build:function(d){
+      if(!d.ssid)return {need:'Escribe el nombre de la red.'};
+      var sec=d.sec||'WPA';if(sec!=='nopass'&&!d.pass)return {need:'Escribe la contraseña o elige «Sin contraseña».'};
+      return {t:'WIFI:T:'+sec+';S:'+wEsc(d.ssid)+';'+(sec!=='nopass'?'P:'+wEsc(d.pass)+';':'')+(d.hidden?'H:true;':'')+';'};
+    }},
+  vcard:{n:'Contacto',f:[F('fn','Nombre'),F('ln','Apellidos'),F('org','Centro u organización'),F('title','Cargo'),F('tel','Teléfono',{tel:1}),F('email','Correo',{email:1}),F('web','Web'),F('adr','Dirección'),F('note','Nota',{area:1})],
+    build:function(d){
+      if(!d.fn&&!d.ln&&!d.org)return {need:'Escribe al menos el nombre o el centro.'};
+      var L=['BEGIN:VCARD','VERSION:3.0','N:'+vEsc(d.ln||'')+';'+vEsc(d.fn||'')+';;;','FN:'+vEsc(((d.fn||'')+' '+(d.ln||'')).trim()||d.org)];
+      if(d.org)L.push('ORG:'+vEsc(d.org));if(d.title)L.push('TITLE:'+vEsc(d.title));
+      if(d.tel)L.push('TEL;TYPE=CELL:'+phone(d.tel));if(d.email)L.push('EMAIL:'+d.email.trim());
+      if(d.web)L.push('URL:'+d.web.trim());if(d.adr)L.push('ADR:;;'+vEsc(d.adr)+';;;;');if(d.note)L.push('NOTE:'+vEsc(d.note));
+      L.push('END:VCARD');return {t:L.join('\n'),file:{ext:'vcf',type:'text/vcard'}};
+    }},
+  email:{n:'Correo',f:[F('to','Para',{email:1,ph:'nombre@correo.com'}),F('subject','Asunto'),F('body','Mensaje',{area:1})],
+    build:function(d){
+      if(!d.to)return {need:'Escribe la dirección de correo.'};
+      var q=[];if(d.subject)q.push('subject='+encodeURIComponent(d.subject));if(d.body)q.push('body='+encodeURIComponent(d.body));
+      return {t:'mailto:'+d.to.trim()+(q.length?'?'+q.join('&'):''),open:1};
+    }},
+  tel:{n:'Teléfono',f:[F('tel','Número',{tel:1,ph:'+34 600 111 222'})],
+    build:function(d){var n=phone(d.tel);return n?{t:'tel:'+n,open:1}:{need:'Escribe el número.'}}},
+  sms:{n:'SMS',f:[F('tel','Número',{tel:1,ph:'+34 600 111 222'}),F('msg','Mensaje',{area:1})],
+    build:function(d){var n=phone(d.tel);return n?{t:'SMSTO:'+n+':'+(d.msg||'')}:{need:'Escribe el número.'}}},
+  wa:{n:'WhatsApp',f:[F('tel','Número con prefijo',{tel:1,ph:'34600111222'}),F('msg','Mensaje',{area:1})],
+    build:function(d){
+      var n=phone(d.tel).replace(/^\+/,'').replace(/^00/,'');if(!n)return {need:'Escribe el número con el prefijo del país.'};
+      var r={t:'https://wa.me/'+n+(d.msg?'?text='+encodeURIComponent(d.msg):''),open:1};
+      if(n.length<=9)r.warn='Falta el prefijo del país delante del número (34 en España), o WhatsApp no lo encontrará.';
+      return r;
+    }},
+  geo:{n:'Ubicación',f:[F('q','Dirección o lugar',{ph:'Auditorio, calle…, ciudad'}),F('lat','Latitud',{ph:'39.4699'}),F('lon','Longitud',{ph:'-0.3763'})],
+    build:function(d){
+      var la=parseFloat(String(d.lat||'').replace(',','.')),lo=parseFloat(String(d.lon||'').replace(',','.')),q;
+      if(isFinite(la)&&isFinite(lo))q=la+','+lo;else if(d.q)q=d.q.trim();else return {need:'Escribe la dirección o las coordenadas.'};
+      return {t:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q),open:1};
+    }},
+  event:{n:'Evento',f:[F('title','Título',{ph:'Concierto de Navidad'}),F('start','Empieza',{dt:1}),F('end','Termina',{dt:1}),F('loc','Lugar'),F('desc','Descripción',{area:1})],
+    build:function(d){
+      if(!d.title)return {need:'Escribe el título del evento.'};
+      var a=icsDate(d.start),b=icsDate(d.end);if(!a)return {need:'Indica cuándo empieza.'};
+      var L=['BEGIN:VEVENT','SUMMARY:'+vEsc(d.title),'DTSTART:'+a];
+      if(b)L.push('DTEND:'+b);if(d.loc)L.push('LOCATION:'+vEsc(d.loc));if(d.desc)L.push('DESCRIPTION:'+vEsc(d.desc));
+      L.push('END:VEVENT');
+      var r={t:L.join('\n'),file:{ext:'ics',type:'text/calendar',wrap:1}};
+      if(b&&b<a)r.warn='El evento termina antes de empezar: revisa las fechas.';
+      return r;
+    }}
+};
+function typeOf(s){return TYPES[s&&s.type]?s.type:'url'}
+
 /* ================= Enlaces ================= */
 function nameOf(doc){return doc?doc.base:''}
 function resolve(doc,si){
   var s=S.slots[si];if(!s)return {err:'vacio'};
+  var ty=typeOf(s);
+  if(ty!=='url'){
+    var dd={},src=s.data||{};
+    Object.keys(src).forEach(function(k){var v=src[k];dd[k]=typeof v==='string'?v.split('{nombre}').join(nameOf(doc)).trim():v});
+    if(!doc&&Object.keys(src).some(function(k){return generic(src[k])}))return {err:'nombre'};
+    var b=TYPES[ty].build(dd);
+    if(!b.t)return {err:'falta',need:b.need};
+    var qq=qrFor(b.t);
+    if(qq.err)return {url:b.t,err:'largo',kind:ty};
+    return {url:b.t,qr:qq,kind:ty,open:!!b.open,file:b.file,warn:b.warn};
+  }
   var ov=doc&&doc.over[si]?doc.over[si].trim():'';
   var raw=ov||s.pattern.trim(),base=S.base.trim();
   if(!raw&&base)raw='{nombre}.mp3';
@@ -12872,7 +12962,7 @@ function resolve(doc,si){
   var url;try{url=new URL(raw).href}catch(e){url=raw}
   var q=qrFor(url);
   if(q.err)return {url:url,err:'largo',over:!!ov};
-  return {url:url,qr:q,over:!!ov};
+  return {url:url,qr:q,over:!!ov,kind:'url',open:true};
 }
 function labelText(doc,si){var s=S.slots[si];return s?sanitize(s.label.split('{nombre}').join(nameOf(doc)).trim()):''}
 function targets(s,n){
@@ -12895,9 +12985,9 @@ function lay(doc,pi,si,res){
   x=clamp(x,0,ps.w-size);y=clamp(y,0,ps.h-size);
   var text=labelText(doc,si),Lb=null;
   if(text){
-    var f=S.labelPt/MM,iw=S.icon?f:0,gi=S.icon?f*0.3:0,tw=textW(text,S.labelPt),W=iw+gi+tw,cx=x+size/2;
+    var ic=S.icon&&typeOf(s)==='url',f=S.labelPt/MM,iw=ic?f:0,gi=ic?f*0.3:0,tw=textW(text,S.labelPt),W=iw+gi+tw,cx=x+size/2;
     var top=y+size+Math.max(Math.min(mg,2*mod),0.8);
-    Lb={text:text,f:f,iw:iw,gi:gi,W:W,start:cx-W/2,top:top,base:top+0.78*f};
+    Lb={text:text,icon:ic,f:f,iw:iw,gi:gi,W:W,start:cx-W/2,top:top,base:top+0.78*f};
   }
   var bx0=x-mg,by0=y-mg,bx1=x+size+mg,by1=y+size+mg;
   if(Lb){bx0=Math.min(bx0,Lb.start-0.8);bx1=Math.max(bx1,Lb.start+Lb.W+0.8);by1=Math.max(by1,Lb.top+Lb.f*1.05+0.6)}
@@ -13045,18 +13135,22 @@ function buildSlots(){
   var box=$('slots');box.innerHTML='';
   S.slots.forEach(function(s,i){
     var el=document.createElement('div');el.className='slot';el.dataset.i=i;
-    el.innerHTML='<div class="slotHead"><b>QR '+(i+1)+'</b><span class="sp"></span><button class="x" title="Quitar este QR" aria-label="Quitar el QR '+(i+1)+'">✕</button></div>'+
-      '<input class="pat" type="text" autocomplete="off" spellcheck="false" aria-label="Enlace o archivo del QR '+(i+1)+'">'+
+    var ty=typeOf(s);
+    el.innerHTML='<div class="slotHead"><b>QR '+(i+1)+'</b><select class="typ" aria-label="Tipo del QR '+(i+1)+'">'+Object.keys(TYPES).map(function(k){return '<option value="'+k+'">'+TYPES[k].n+'</option>'}).join('')+'</select><span class="sp"></span><button class="x" title="Quitar este QR" aria-label="Quitar el QR '+(i+1)+'">✕</button></div>'+
+      (ty==='url'?'<input class="pat" type="text" autocomplete="off" spellcheck="false" aria-label="Enlace o archivo del QR '+(i+1)+'">':'<div class="flds"></div>')+
       '<div class="encoded"></div>'+
       '<div class="row"><input class="lab" type="text" placeholder="Texto debajo" aria-label="Texto debajo del QR '+(i+1)+'">'+
       '<select class="pgs" aria-label="Página del QR '+(i+1)+'"><option value="first">1.ª página</option><option value="last">Última página</option><option value="all">Todas</option><option value="n">Página…</option></select>'+
       '<input class="pgn" type="number" min="1" aria-label="Número de página"></div>';
     var q=function(c){return el.querySelector(c)};
-    q('.pat').value=s.pattern;q('.lab').value=s.label;q('.pgs').value=s.page;q('.pgn').value=s.pageN;
+    q('.typ').value=ty;
+    if(ty==='url')q('.pat').value=s.pattern;else buildFields(q('.flds'),s,i);
+    q('.lab').value=s.label;q('.pgs').value=s.page;q('.pgn').value=s.pageN;
     q('.x').disabled=S.slots.length<2;
     el.addEventListener('focusin',function(){setSel(i)});
     el.addEventListener('pointerdown',function(e){if(e.target.tagName!=='BUTTON')setSel(i)});
-    q('.pat').oninput=function(){s.pattern=this.value;persist();refresh()};
+    if(ty==='url')q('.pat').oninput=function(){s.pattern=this.value;persist();refresh()};
+    q('.typ').onchange=function(){s.type=this.value;s.data=s.data||{};S.sel=i;structure();var f=$('slots').children[i].querySelector('.flds input,.flds textarea,.pat');if(f)f.focus()};
     q('.lab').oninput=function(){s.label=this.value;persist();refresh()};
     q('.pgs').onchange=function(){s.page=this.value;persist();refresh()};
     q('.pgn').oninput=function(){var v=parseInt(this.value,10);if(v>=1){s.pageN=v;persist();refresh()}};
@@ -13064,6 +13158,25 @@ function buildSlots(){
     box.appendChild(el);
   });
   $('addSlot').disabled=S.slots.length>=MAXS;
+}
+function buildFields(box,s,i){
+  s.data=s.data||{};
+  TYPES[typeOf(s)].f.forEach(function(f){
+    var id='f'+i+'_'+f.k,v=s.data[f.k],w=document.createElement('div');w.className='fld'+(f.area||f.opts||f.dt||f.check?' wide':'');
+    if(f.check){
+      w.innerHTML='<label class="check" style="margin:2px 0 0"><input type="checkbox" id="'+id+'"> <span>'+esc(f.l)+'</span></label>';
+      var c=w.querySelector('input');c.checked=!!v;c.onchange=function(){s.data[f.k]=this.checked;persist();refresh()};
+    }else{
+      var tag=f.area?'textarea':f.opts?'select':'input';
+      w.innerHTML='<label for="'+id+'">'+esc(f.l)+'</label><'+tag+' id="'+id+'"'+(f.area?' rows="2"':'')+'></'+tag+'>';
+      var e=w.querySelector(tag);
+      if(f.opts)e.innerHTML=f.opts.map(function(o){return '<option value="'+o[0]+'">'+esc(o[1])+'</option>'}).join('');
+      else{if(!f.area)e.type=f.dt?'datetime-local':f.tel?'tel':f.email?'email':'text';e.setAttribute('autocomplete','off');e.spellcheck=false;if(f.ph)e.placeholder=f.ph}
+      e.value=v==null?(f.opts?f.opts[0][0]:''):v;
+      e.addEventListener(f.opts?'change':'input',function(){s.data[f.k]=this.value;persist();refresh()});
+    }
+    box.appendChild(w);
+  });
 }
 function addSlot(){
   if(S.slots.length>=MAXS)return;
@@ -13074,7 +13187,7 @@ function addSlot(){
     if(s.x+s.size>ps.w){s.x=ly.x;s.y=ly.box.y+ly.box.h+ly.mg+3}
   }
   S.slots.push(s);S.sel=i;structure();
-  var inp=$('slots').querySelectorAll('.pat')[i];if(inp)inp.focus();
+  var inp=$('slots').children[i].querySelector('.pat');if(inp)inp.focus();
 }
 function removeSlot(i){
   if(S.slots.length<2)return;
@@ -13091,9 +13204,15 @@ function updateSlotCards(){
     var el=cards[i];if(!el)return;
     el.classList.toggle('sel',i===S.sel);
     var pat=el.querySelector('.pat');
-    pat.placeholder=S.base.trim()?'{nombre}.mp3':'https://miweb.com/audio/obra.mp3';
+    if(pat)pat.placeholder=S.base.trim()?'{nombre}.mp3':'https://miweb.com/audio/obra.mp3';
     el.querySelector('.pgn').hidden=s.page!=='n';
     var r=resolve(d,i),enc=el.querySelector('.encoded'),t='';
+    if(typeOf(s)!=='url'){
+      if(r.url)t='Se codifica: '+(r.url.length>220?r.url.slice(0,220)+'…':r.url);
+      else if(r.err==='falta')t=r.need;
+      else if(r.err==='nombre')t='Usa {nombre}: abre una partitura para ver el contenido.';
+      enc.textContent=t;enc.hidden=!t;enc.style.whiteSpace='pre-wrap';return;
+    }
     if(r.url)t=(r.over?'En esta partitura (cambiado a mano): ':(many?'En esta partitura: ':'Se codifica: '))+r.url;
     else if(r.err==='nombre')t='Usa {nombre}: abre una partitura para ver el enlace.';
     enc.textContent=t;enc.hidden=!t||(!many&&!r.over&&r.url===s.pattern.trim());
@@ -13131,8 +13250,8 @@ function drawBoxes(){
     tgt.style.left=(ly.x-bx.x)*k+'px';tgt.style.top=(ly.y-bx.y)*k+'px';tgt.style.width=tgt.style.height=ly.size*k+'px';
     var lb=b.querySelector('.lb');
     if(ly.L){
-      var f=ly.L.f*k,kl=ly.L.text+'|'+S.icon;
-      if(lb.dataset.k!==kl){lb.innerHTML=(S.icon?ICON_SVG:'')+'<span></span>';lb.lastChild.textContent=ly.L.text;lb.dataset.k=kl}
+      var f=ly.L.f*k,kl=ly.L.text+'|'+ly.L.icon;
+      if(lb.dataset.k!==kl){lb.innerHTML=(ly.L.icon?ICON_SVG:'')+'<span></span>';lb.lastChild.textContent=ly.L.text;lb.dataset.k=kl}
       lb.hidden=false;lb.style.left=(ly.L.start-bx.x)*k+'px';lb.style.top=(ly.L.top-bx.y)*k+'px';lb.style.fontSize=f+'px';lb.style.height=f*1.05+'px';
       var ic=lb.querySelector('svg');if(ic){ic.style.width=ic.style.height=ly.L.iw*k+'px';ic.style.marginRight=ly.L.gi*k+'px'}
     }else lb.hidden=true;
@@ -13254,29 +13373,38 @@ function refresh(){
   updateSlotCards();
   var d=D(),r=resolve(d,S.sel),ok=!!r.qr;
   $('png').disabled=$('svg').disabled=$('test').disabled=!ok;
-  $('thumb').innerHTML=ok?svgMarkup(r.qr,S.margin):(r.err==='nombre'?'Abre una partitura':'Escribe el enlace');
-  var warn=null,cls='warn',s=selSlot();
+  var s=selSlot(),isUrl=typeOf(s)==='url';
+  $('thumb').innerHTML=ok?svgMarkup(r.qr,S.margin):(r.err==='nombre'?'Abre una partitura':isUrl?'Escribe el enlace':'Rellena los datos');
+  $('test').textContent=!isUrl&&r.file?'Probar (descargar .'+r.file.ext+')':isUrl?'Probar enlace':'Probar';
+  $('test').disabled=!ok||(!r.open&&!r.file);
+  var warn=null,cls='warn',L0=isUrl?'el enlace':'el contenido';
   if(ok){
     var mod=Math.min(s.size,pageSize(d,0).w)/r.qr.n;
     $('qrinfo').textContent=r.qr.n+' × '+r.qr.n+' módulos. Cada módulo mide '+fmt(mod,2)+' mm.';
-    if(mod<0.33){cls='err';warn='Módulos demasiado pequeños: muchos móviles no lo leerán al imprimir. Agranda el QR o acorta el enlace.'}
-    else if(mod<0.5)warn='QR muy justo para imprimir. Mejor agrandarlo hasta unos '+Math.ceil(r.qr.n*0.5)+' mm o acortar el enlace.';
+    if(mod<0.33){cls='err';warn='Módulos demasiado pequeños: muchos móviles no lo leerán al imprimir. Agranda el QR o acorta '+L0+'.'}
+    else if(mod<0.5)warn='QR muy justo para imprimir. Mejor agrandarlo hasta unos '+Math.ceil(r.qr.n*0.5)+' mm o acortar '+L0+'.';
     else if(S.margin<2)warn='Con tan poco margen blanco puede costar leerlo si hay notas o texto pegados.';
   }else{
-    $('qrinfo').textContent=r.err==='nombre'?'El enlace usa {nombre}.':'Sin QR todavía';
-    if(r.err==='largo'){cls='err';warn='El enlace es demasiado largo para este nivel de corrección. Baja el nivel o usa un enlace más corto.'}
+    $('qrinfo').textContent=r.err==='nombre'?'Usa {nombre}.':r.err==='falta'?r.need:'Sin QR todavía';
+    if(r.err==='largo'){cls='err';warn=(isUrl?'El enlace es demasiado largo':'Hay demasiado contenido')+' para este nivel de corrección. Baja el nivel o '+(isUrl?'usa un enlace más corto':'quita datos')+'.'}
   }
-  if(!warn&&r.url&&/^https?:\/\/([^/]*\.)?(drive\.google|docs\.google|dropbox|onedrive\.live|1drv|sharepoint)\./i.test(r.url))warn='Comprueba que el archivo esté compartido con «cualquiera que tenga el enlace», o no se podrá abrir desde el móvil.';
-  if(!warn&&docs.length>1){
+  if(!warn&&r.warn)warn=r.warn;
+  if(!warn&&isUrl&&r.url&&/^https?:\/\/([^/]*\.)?(drive\.google|docs\.google|dropbox|onedrive\.live|1drv|sharepoint)\./i.test(r.url))warn='Comprueba que el archivo esté compartido con «cualquiera que tenga el enlace», o no se podrá abrir desde el móvil.';
+  if(!warn&&docs.length>1&&isUrl){
     var urls=docs.map(function(x){return resolve(x,S.sel).url||''});
     if(urls[0]&&urls.every(function(u){return u===urls[0]}))warn='Todas las partituras tendrán este mismo enlace. Para que cada una lleve el suyo usa la dirección base, {nombre} o la tabla de enlaces.';
   }
   if(!warn&&s.label&&HELV&&labelText(d,S.sel).indexOf('?')>=0&&s.label.indexOf('?')<0)warn='El texto lleva letras que el PDF no puede escribir; se cambian por «?».';
-  if(!warn&&r.url&&!/^https?:\/\//i.test(r.url))warn='La dirección debería empezar por http:// o https://.';
+  if(!warn&&isUrl&&r.url&&!/^https?:\/\//i.test(r.url))warn='La dirección debería empezar por http:// o https://.';
   msg('qrMsg',cls,warn);
   drawBoxes();updateSave();
 }
-$('test').onclick=function(){var r=resolve(D(),S.sel);if(r.url)window.open(r.url,'_blank','noopener')};
+$('test').onclick=function(){
+  var r=resolve(D(),S.sel);if(!r.qr)return;
+  if(r.file){var t=r.file.wrap?'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//QR-PDF//ES\r\n'+r.url.replace(/\n/g,'\r\n')+'\r\nEND:VCALENDAR\r\n':r.url.replace(/\n/g,'\r\n');
+    download(new Blob([t],{type:r.file.type}),'prueba_qr.'+r.file.ext);return}
+  if(r.open)window.open(r.url,'_blank','noopener');
+};
 $('svg').onclick=function(){var r=resolve(D(),S.sel);if(r.qr)download(new Blob([svgMarkup(r.qr,S.margin)],{type:'image/svg+xml'}),'qr.svg')};
 $('png').onclick=function(){
   var r=resolve(D(),S.sel);if(!r.qr)return;
@@ -13313,12 +13441,13 @@ function renderTable(){
     h+='<tr'+(di===curDoc?' class="cur"':'')+'><td><button class="linkbtn" data-d="'+di+'">'+esc(d.name)+'</button></td>';
     S.slots.forEach(function(s,si){
       var r=resolve(Object.assign({},d,{over:[]}),si);
+      if(typeOf(s)!=='url'){h+='<td><input type="text" disabled value="" placeholder="'+esc(TYPES[typeOf(s)].n+(r.url?': igual en todas':': sin datos'))+'"></td>';return}
       h+='<td><input type="text" data-d="'+di+'" data-s="'+si+'" value="'+esc(d.over[si]||'')+'" placeholder="'+esc(r.url||'(sin enlace)')+'" spellcheck="false"></td>';
     });
     h+='</tr>';
   });
   $('tblWrap').innerHTML=h+'</tbody></table>';
-  $('tblWrap').querySelectorAll('input').forEach(function(inp){
+  $('tblWrap').querySelectorAll('input:not([disabled])').forEach(function(inp){
     inp.oninput=function(){docs[+this.dataset.d].over[+this.dataset.s]=this.value;refresh()};
   });
   $('tblWrap').querySelectorAll('.linkbtn').forEach(function(b){
@@ -13352,19 +13481,19 @@ function parseCSV(t){
 function normName(n){return String(n).trim().toLowerCase().replace(/\.pdf$/,'')}
 $('csvFile').onchange=async function(){
   var f=this.files[0];this.value='';if(!f)return;
-  var rows=parseCSV(await f.text()),ok=0,miss=[];
+  var rows=parseCSV(await f.text()),ok=0,miss=[],skip=0;
   rows.forEach(function(r,ri){
     var d=docs.find(function(x){return normName(x.name)===normName(r[0])});
     if(!d){if(ri>0)miss.push(r[0]);return}
     r.slice(1).forEach(function(v,j){
       v=v.trim();if(!v)return;
       while(j>=S.slots.length&&S.slots.length<MAXS){var s=defSlot(S.slots.length),p=S.slots[S.slots.length-1];s.size=p.size;s.y=p.y;s.x=p.x+p.size+8;S.slots.push(s)}
-      if(j<S.slots.length)d.over[j]=v;
+      if(j<S.slots.length){if(typeOf(S.slots[j])==='url')d.over[j]=v;else skip++}
     });
     ok++;
   });
   structure();renderTable();
-  msg('tblMsg',miss.length?'warn':'ok','Enlaces importados en '+ok+' partitura'+(ok===1?'':'s')+'.'+(miss.length?' No encuentro estas partituras abiertas: '+miss.join(', ')+'.':''));
+  msg('tblMsg',miss.length?'warn':'ok','Enlaces importados en '+ok+' partitura'+(ok===1?'':'s')+'.'+(miss.length?' No encuentro estas partituras abiertas: '+miss.join(', ')+'.':'')+(skip?' Se han ignorado '+skip+' valores de QR que no son de enlace web.':''));
 };
 
 /* ================= Guardar ================= */
@@ -13412,7 +13541,7 @@ function stamp(pdf,page,ly,res,font){
   var M=pageMatrix(page),k=MM,b=ly.box,ops=[L.pushGraphicsState(),L.concatTransformationMatrix(M[0],M[1],M[2],M[3],n3(M[4]),n3(M[5]))];
   ops.push(L.setFillingGrayscaleColor(1),L.rectangle(n3(b.x*k),n3(b.y*k),n3(b.w*k),n3(b.h*k)),L.fill(),L.setFillingGrayscaleColor(0));
   qrOps(ops,res.qr,ly.x*k,ly.y*k,ly.size*k/res.qr.n);
-  if(ly.L&&S.icon)iconOps(ops,ly.L.start*k,(ly.L.top+0.02*ly.L.f)*k,ly.L.iw*k);
+  if(ly.L&&ly.L.icon)iconOps(ops,ly.L.start*k,(ly.L.top+0.02*ly.L.f)*k,ly.L.iw*k);
   ops.push(L.popGraphicsState());
   page.node.normalize();
   page.pushOperators.apply(page,ops);
@@ -13420,7 +13549,7 @@ function stamp(pdf,page,ly,res,font){
     var p=apply(M,(ly.L.start+ly.L.iw+ly.L.gi)*k,ly.L.base*k);
     page.drawText(ly.L.text,{x:p[0],y:p[1],size:S.labelPt,font:font,color:L.rgb(0,0,0),rotate:L.degrees(Math.round(Math.atan2(M[1],M[0])*180/Math.PI))});
   }
-  if(S.link){
+  if(S.link&&res.open){
     var c1=apply(M,ly.x*k,ly.y*k),c2=apply(M,(ly.x+ly.size)*k,(ly.y+ly.size)*k);
     var ann=pdf.context.obj({Type:'Annot',Subtype:'Link',
       Rect:[n3(Math.min(c1[0],c2[0])),n3(Math.min(c1[1],c2[1])),n3(Math.max(c1[0],c2[0])),n3(Math.max(c1[1],c2[1]))],
@@ -13563,7 +13692,7 @@ function fillPresets(sel){
 function snapshot(){return {slots:slotsToStore(),ec:S.ec,margin:S.margin,labelPt:S.labelPt,icon:S.icon,link:S.link}}
 function applyPreset(p){
   if(!p||!Array.isArray(p.slots)||!p.slots.length)return false;
-  S.slots=p.slots.slice(0,MAXS).map(function(o,i){var old=S.slots[i],s=Object.assign(defSlot(i),o);if(!s.pattern&&old)s.pattern=old.pattern;return s});
+  S.slots=p.slots.slice(0,MAXS).map(function(o,i){var old=S.slots[i],s=Object.assign(defSlot(i),o);s.data=Object.assign({},o.data||{});if(!s.pattern&&old)s.pattern=old.pattern;if(old&&old.type===s.type&&old.data&&old.data.pass&&!s.data.pass)s.data.pass=old.data.pass;return s});
   ['ec','margin','labelPt','icon','link'].forEach(function(k){if(k in p)S[k]=p[k]});
   S.sel=0;syncOptions();structure();return true;
 }

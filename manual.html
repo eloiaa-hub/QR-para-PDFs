@@ -67,6 +67,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li><a href="#colocar">Mover y cambiar el tamaño del QR</a></li>
 <li><a href="#lote">Varias partituras a la vez</a></li>
 <li><a href="#varios">Varios QR y texto bajo el QR</a></li>
+<li><a href="#tipos">Otros tipos de QR</a></li>
 <li><a href="#avisos">Avisos y comprobación</a></li>
 <li><a href="#opciones">Opciones</a></li>
 <li><a href="#posiciones">Posiciones guardadas</a></li>
@@ -77,7 +78,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 </ol></div>
 
 <h2 id="que-es">1. Qué es y para qué sirve</h2>
-<p><b>QR-PDF</b> crea códigos QR con el enlace a un archivo de audio (por ejemplo, un MP3 subido a internet) y los coloca sobre partituras en PDF. Quien tenga la partitura en papel escanea el código con el móvil y escucha la obra.</p>
+<p><b>QR-PDF</b> crea códigos QR con el enlace a un archivo de audio (por ejemplo, un MP3 subido a internet), o con otros contenidos como un wifi, un contacto o un evento, y los coloca sobre partituras en PDF. Quien tenga la partitura en papel escanea el código con el móvil y escucha la obra.</p>
 <ul>
 <li>Funciona <b>sin conexión</b>: es un único archivo HTML que se abre con el navegador.</li>
 <li><b>Nada se sube a internet</b>: las partituras se quedan en tu ordenador.</li>
@@ -147,7 +148,33 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li>El texto usa la letra Helvetica, que admite acentos, ñ, ç y «·». Los caracteres que no puede escribir se cambian por «?» y el programa avisa.</li>
 </ul>
 
-<h2 id="avisos">7. Avisos y comprobación</h2>
+<h2 id="tipos">7. Otros tipos de QR</h2>
+<p>Además de enlaces web, cada QR puede llevar otro contenido. Se elige en el desplegable que hay junto a «QR 1», «QR 2»…</p>
+<table>
+<tr><th>Tipo</th><th>Qué pasa al escanearlo</th><th>Datos</th></tr>
+<tr><td>Enlace web</td><td>Abre la página o el audio.</td><td>La dirección (con dirección base y <code>{nombre}</code>, apartado 5).</td></tr>
+<tr><td>Texto</td><td>Muestra el texto en el móvil.</td><td>Cualquier texto: instrucciones, letra breve, avisos…</td></tr>
+<tr><td>Wifi</td><td>Ofrece conectarse a la red sin escribir la contraseña.</td><td>Nombre de la red, seguridad, contraseña y si la red está oculta.</td></tr>
+<tr><td>Contacto</td><td>Ofrece guardar el contacto en la agenda.</td><td>Nombre, apellidos, centro, cargo, teléfono, correo, web, dirección y nota.</td></tr>
+<tr><td>Correo</td><td>Abre un correo nuevo ya escrito.</td><td>Destinatario, asunto y mensaje.</td></tr>
+<tr><td>Teléfono</td><td>Propone llamar al número.</td><td>El número, mejor con prefijo (+34…).</td></tr>
+<tr><td>SMS</td><td>Abre un SMS al número con el mensaje escrito.</td><td>Número y mensaje.</td></tr>
+<tr><td>WhatsApp</td><td>Abre un chat de WhatsApp con ese número y el mensaje.</td><td>Número <b>con prefijo del país</b> (34 en España) y mensaje.</td></tr>
+<tr><td>Ubicación</td><td>Abre el lugar en Google Maps.</td><td>Una dirección o el nombre del lugar, o bien la latitud y la longitud.</td></tr>
+<tr><td>Evento</td><td>Ofrece añadir el evento al calendario.</td><td>Título, inicio, fin, lugar y descripción.</td></tr>
+</table>
+<ul>
+<li>Bajo los campos aparece <b>«Se codifica:»</b> con el contenido exacto del QR, y un aviso si falta algún dato.</li>
+<li>En todos los campos de texto vale <code>{nombre}</code>; por ejemplo, un evento titulado <i>Ensayo de {nombre}</i>.</li>
+<li><b>«Probar»</b> abre el correo, el teléfono, WhatsApp o el mapa. En contacto y evento descarga un archivo <code>.vcf</code> o <code>.ics</code> para que compruebes los datos al abrirlo. En texto, wifi y SMS no hay nada que abrir: comprueba lo que pone en «Se codifica».</li>
+<li>La dirección base, la tabla de enlaces, el CSV y el icono de altavoz solo afectan a los QR de enlace web. Los demás tipos llevan el mismo contenido en todas las partituras (salvo lo que pongas con <code>{nombre}</code>).</li>
+<li>La opción «hacer clic en el QR abre el enlace» funciona con enlace web, correo, teléfono, WhatsApp y ubicación.</li>
+<li>Cuantos más datos, más denso sale el QR. Un contacto completo necesita unos 25-30 mm de lado; el programa avisa si queda justo.</li>
+</ul>
+<figure><img src="img/tipos.png" alt="Dos QR: uno de evento y otro de wifi, con sus campos"><figcaption>Un QR de evento («Concierto») y otro de wifi en la misma partitura. Bajo los campos se ve lo que se codifica.</figcaption></figure>
+<div class="note">La <b>contraseña del wifi no se guarda</b> en el navegador ni en las posiciones guardadas, así que hay que escribirla de nuevo cada vez que abres el programa. Recuerda que cualquiera que escanee el QR podrá conectarse a esa red.</div>
+
+<h2 id="avisos">8. Avisos y comprobación</h2>
 <ul>
 <li><b>Tapa la partitura:</b> si debajo del QR (o de su margen blanco) hay notas, texto o pentagramas, el QR se marca en rojo y aparece un aviso. Muévelo a una zona en blanco o hazlo más pequeño.</li>
 <li><b>QR solapados:</b> si dos QR se tocan, también se avisa, porque se estropearían el uno al otro.</li>
@@ -156,7 +183,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <figure><img src="img/resultado.png" alt="Resumen tras guardar varias partituras"><figcaption>Resumen al guardar varias partituras: cuántos QR lleva cada una, si se leen bien y los avisos.</figcaption></figure>
 <p>Los avisos no impiden guardar: son para revisar. Si una comprobación sale en rojo, no imprimas esa partitura sin mirarla antes.</p>
 
-<h2 id="opciones">8. Opciones</h2>
+<h2 id="opciones">9. Opciones</h2>
 <table>
 <tr><th>Opción</th><th>Qué hace</th></tr>
 <tr><td>Tamaño del texto</td><td>De 6 a 12 puntos. 7 u 8 pt suele bastar.</td></tr>
@@ -164,13 +191,13 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <tr><td>Corrección de errores</td><td>Cuanto más alta, mejor se lee aunque el papel se manche o se doble, pero el código tiene más cuadritos. <b>Media (M)</b> suele ir bien.</td></tr>
 <tr><td>Margen blanco</td><td>Espacio limpio alrededor del código, que el móvil necesita para reconocerlo. Lo recomendable son <b>4 módulos</b>. Además tapa lo que haya debajo.</td></tr>
 <tr><td>Clic en pantalla</td><td>Al ver el PDF en el ordenador, hacer clic sobre el QR abre el enlace.</td></tr>
-<tr><td>Comprobar al guardar</td><td>Lee de nuevo cada QR del PDF guardado (apartado 7).</td></tr>
+<tr><td>Comprobar al guardar</td><td>Lee de nuevo cada QR del PDF guardado (apartado 8).</td></tr>
 <tr><td>PNG / SVG</td><td>Guardan solo el QR elegido como imagen, por si quieres usarlo en otro documento.</td></tr>
 <tr><td>Tema y Ayuda</td><td>Aspecto claro u oscuro, y un resumen de este manual dentro del programa.</td></tr>
 </table>
 <p>Bajo la miniatura del QR se indica cuánto mide cada cuadrito (módulo). Si es demasiado pequeño para imprimirlo, el programa avisa en amarillo o en rojo.</p>
 
-<h2 id="posiciones">9. Posiciones guardadas</h2>
+<h2 id="posiciones">10. Posiciones guardadas</h2>
 <p>Si usas partituras de formatos distintos (por ejemplo, A4 vertical y apaisado, o las de una editorial concreta), guarda cada colocación con un nombre:</p>
 <ol>
 <li>Coloca los QR como quieras.</li>
@@ -180,7 +207,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <p>Se guarda la posición, el tamaño, la página y el texto de cada QR, y las opciones de texto, corrección, margen y enlace. Los enlaces solo se guardan si usan <code>{nombre}</code>, porque así sirven para cualquier partitura. Si un QR de la posición guardada no lleva enlace, se mantiene el que ya tuvieras escrito.</p>
 <p>Las posiciones se guardan en el navegador. Con <b>Exportar</b> se descargan todas en un archivo <code>posiciones_QR.json</code> y con <b>Importar</b> se cargan en otro ordenador o navegador.</p>
 
-<h2 id="pegatinas">10. Hoja de pegatinas</h2>
+<h2 id="pegatinas">11. Hoja de pegatinas</h2>
 <p>Para partituras que ya están impresas, «Hoja de pegatinas…» crea un PDF con los QR para imprimir en papel adhesivo y pegar en cada copia.</p>
 <figure><img src="img/pegatinas.png" alt="Ventana de la hoja de pegatinas con la vista previa"><figcaption>Hoja de pegatinas con la plantilla Apli / Avery 3474 y la vista previa.</figcaption></figure>
 <ul>
@@ -191,7 +218,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 </ul>
 <div class="note">Imprime la hoja de pegatinas <b>al 100 %</b> («tamaño real»), sin «ajustar a la página», o las etiquetas no coincidirán con el papel. Haz antes una prueba en papel normal y ponla a contraluz sobre la hoja de etiquetas.</div>
 
-<h2 id="mp3">11. Preparar el enlace del MP3</h2>
+<h2 id="mp3">12. Preparar el enlace del MP3</h2>
 <p>El QR guarda la dirección exacta. Por eso:</p>
 <ul>
 <li><b>El enlace no debe cambiar nunca.</b> Si mueves, borras o renombras el MP3, las copias ya impresas dejarán de funcionar.</li>
@@ -201,7 +228,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li>Si escribes la dirección sin <code>https://</code>, el programa lo añade. Debajo de cada QR se muestra lo que se codifica de verdad.</li>
 </ul>
 
-<h2 id="imprimir">12. Consejos para imprimir</h2>
+<h2 id="imprimir">13. Consejos para imprimir</h2>
 <ul>
 <li>Un <b>lado de 20 a 25 mm</b> suele leerse bien con un enlace normal. Si el enlace es largo, agranda el QR hasta que desaparezca el aviso.</li>
 <li>Deja el QR sobre <b>fondo blanco</b> y lejos de pentagramas o texto; el margen blanco y el aviso de tapado te ayudan.</li>
@@ -209,7 +236,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li>Si la partitura se va a fotocopiar varias veces, sube la corrección de errores a <b>Alta (Q)</b> y agranda un poco el QR.</li>
 </ul>
 
-<h2 id="problemas">13. Problemas frecuentes</h2>
+<h2 id="problemas">14. Problemas frecuentes</h2>
 <table>
 <tr><th>Lo que pasa</th><th>Solución</th></tr>
 <tr><td>«Está protegido y no se puede modificar»</td><td>El PDF tiene contraseña o restricciones. Quita la protección con el programa que lo creó o guarda una copia sin ella.</td></tr>
