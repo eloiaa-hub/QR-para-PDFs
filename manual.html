@@ -66,7 +66,7 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li><a href="#pasos">Uso en cuatro pasos</a></li>
 <li><a href="#colocar">Mover y cambiar el tamaño del QR</a></li>
 <li><a href="#lote">Varias partituras a la vez</a></li>
-<li><a href="#varios">Varios QR y texto bajo el QR</a></li>
+<li><a href="#varios">Varios QR y texto junto al QR</a></li>
 <li><a href="#tipos">Otros tipos de QR</a></li>
 <li><a href="#avisos">Avisos y comprobación</a></li>
 <li><a href="#opciones">Opciones</a></li>
@@ -139,13 +139,22 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <h3>Guardar todas</h3>
 <p>«Guardar las N partituras (ZIP)» crea todas las copias, con el QR en la misma posición, dentro de un solo archivo <code>partituras_QR.zip</code>. Al terminar se muestra un resumen con lo que se ha hecho en cada partitura.</p>
 
-<h2 id="varios">6. Varios QR y texto bajo el QR</h2>
+<h2 id="varios">6. Varios QR y texto junto al QR</h2>
 <figure><img src="img/varios.png" alt="Partitura con dos QR, uno junto al título y otro en la esquina"><figcaption>Dos QR en la misma partitura: «Escuchar» y «Coro». El QR 2 está marcado en rojo porque tapa el nombre del compositor.</figcaption></figure>
 <ul>
 <li><b>«+ Añadir otro QR»</b> (hasta 8) sirve, por ejemplo, para un audio por movimiento o por voz: soprano, contralto, tenor, bajo, acompañamiento…</li>
 <li>Cada QR tiene su <b>enlace</b>, su <b>texto</b> y su <b>página</b>: la primera, la última, todas o una en concreto. Para mover uno, pulsa sobre él en la hoja o en su recuadro de la izquierda.</li>
-<li>El <b>texto</b> se escribe centrado debajo del QR, por ejemplo «Escuchar» o «Soprano». También admite <code>{nombre}</code>. En «Texto y opciones» eliges su tamaño y si lleva delante un <b>icono de altavoz</b>.</li>
+<li>El <b>texto</b> puede ir <b>debajo</b> del QR, centrado, o <b>al lado</b>, a su derecha. Se elige en el desplegable «Texto debajo / Texto al lado» de cada QR. Ejemplos: «Escuchar», «Soprano» o «Escuchar · Ave Maria». También admite <code>{nombre}</code>. En «Texto y opciones» eliges su tamaño y si los QR de enlace llevan delante un <b>icono de altavoz</b>.</li>
 <li>El texto usa la letra Helvetica, que admite acentos, ñ, ç y «·». Los caracteres que no puede escribir se cambian por «?» y el programa avisa.</li>
+</ul>
+
+<h3>Texto al lado: un bloque apaisado</h3>
+<p>Con «Texto al lado» el QR y su texto forman una franja horizontal, cómoda para ponerla junto al título o en el margen superior. El QR sigue siendo cuadrado, porque es el único que leen todas las cámaras de móvil (existen QR rectangulares, pero los móviles todavía no los leen).</p>
+<figure><img src="img/texto-al-lado.png" alt="QR con el texto «Escuchar · Ave Maria» a su derecha, junto al título"><figcaption>«Texto al lado» con «Junto al título»: el programa deja sitio al texto para que no choque con el título.</figcaption></figure>
+<ul>
+<li>El texto queda centrado en altura respecto al QR y separado lo justo para no invadir el margen blanco que necesita el móvil.</li>
+<li>Con «Junto al título», el programa tiene en cuenta el ancho del texto y coloca el bloque entero a la izquierda del título.</li>
+<li>El texto va en una sola línea: si es largo, el bloque se alarga. Si no cabe en la hoja, el programa lo desplaza hacia dentro.</li>
 </ul>
 
 <h3>Audio desde un momento concreto</h3>

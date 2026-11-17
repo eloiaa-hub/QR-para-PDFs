@@ -288,7 +288,7 @@ kbd{font:inherit;font-size:12px;padding:0 5px;border:1px solid var(--line);borde
       <li>«+ Añadir otro QR» sirve, por ejemplo, para un audio por movimiento o por voz (soprano, contralto…).</li>
       <li>Cada QR tiene su enlace, su texto y su página (primera, última, todas o una en concreto). Pulsa un QR para elegirlo y moverlo.</li>
       <li><b>Empieza en</b> (min:seg) hace que el audio empiece en ese momento, por ejemplo en un movimiento concreto de un MP3 con toda la obra. Solo funciona con enlaces directos al archivo; pruébalo en tu móvil.</li>
-      <li>El <b>texto</b> se escribe debajo del QR, con un icono de altavoz si quieres. También admite <code>{nombre}</code>.</li>
+      <li>El <b>texto</b> va debajo del QR o <b>al lado</b> (para ocupar una franja horizontal, junto al título o en el margen), con un icono de altavoz si quieres. También admite <code>{nombre}</code>.</li>
     </ul>
     <h3>Tipos de QR</h3>
     <ul>
@@ -12789,7 +12789,7 @@ function download(blob,name){
 }
 
 /* ================= Ajustes ================= */
-function defSlot(i){return {type:'url',data:{},pattern:'',label:'',x:12+i*28,y:10,size:20,page:'first',pageN:1,auto:false}}
+function defSlot(i){return {type:'url',data:{},pattern:'',label:'',labelPos:'below',x:12+i*28,y:10,size:20,page:'first',pageN:1,auto:false}}
 var TPL={
   '3474':{n:'Apli / Avery 3474 · 24 por hoja (70 × 37 mm)',page:'A4',cols:3,rows:8,w:70,h:37,top:0.5,left:0,gx:0,gy:0},
   'L7160':{n:'Avery L7160 · 21 por hoja (63,5 × 38,1 mm)',page:'A4',cols:3,rows:7,w:63.5,h:38.1,top:15.15,left:7.21,gx:2.54,gy:0},
@@ -12997,17 +12997,20 @@ function pageSize(doc,pi){return doc&&doc.sizes[pi]||{w:210,h:297}}
 function lay(doc,pi,si,res){
   var s=S.slots[si],ps=pageSize(doc,pi),n=res&&res.qr?res.qr.n:25;
   var size=Math.max(5,Math.min(s.size,ps.w,ps.h)),x=s.x,y=s.y,autoOk=false;
-  var mod=size/n,mg=mod*S.margin;
+  var mod=size/n,mg=mod*S.margin,gap=Math.max(Math.min(mg,2*mod),0.8);
+  var text=labelText(doc,si),side=!!text&&s.labelPos==='side';if(side)gap=Math.max(Math.min(mg,3*mod),0.8);var f=S.labelPt/MM,ic=false,iw=0,gi=0,W=0;
+  if(text){ic=S.icon&&typeOf(s)==='url';iw=ic?f:0;gi=ic?f*0.3:0;W=iw+gi+textW(text,S.labelPt)}
+  var right=side?Math.max(mg,gap+W+0.8):mg; // lo que ocupa a la derecha del QR
   if(s.auto&&doc&&doc.title&&pi===0){
-    var t=doc.title,ax=t.x-5-size-mg,ay=t.y+t.h/2-size/2;
+    var t=doc.title,ax=t.x-5-size-right,ay=t.y+t.h/2-size/2;
     if(ax>=Math.max(2,mg)){x=ax;y=Math.max(ay,mg+1);autoOk=true}
   }
-  x=clamp(x,0,ps.w-size);y=clamp(y,0,ps.h-size);
-  var text=labelText(doc,si),Lb=null;
+  x=clamp(x,0,Math.max(0,ps.w-size-(side?right:0)));y=clamp(y,0,ps.h-size);
+  var Lb=null;
   if(text){
-    var ic=S.icon&&typeOf(s)==='url',f=S.labelPt/MM,iw=ic?f:0,gi=ic?f*0.3:0,tw=textW(text,S.labelPt),W=iw+gi+tw,cx=x+size/2;
-    var top=y+size+Math.max(Math.min(mg,2*mod),0.8);
-    Lb={text:text,icon:ic,f:f,iw:iw,gi:gi,W:W,start:cx-W/2,top:top,base:top+0.78*f};
+    var top=y+size+gap,cx=x+size/2;
+    if(side){top=y+size/2-f*0.5;cx=x+size+gap+W/2}
+    Lb={text:text,icon:ic,f:f,iw:iw,gi:gi,W:W,start:cx-W/2,top:top,base:top+0.78*f,side:side};
   }
   var bx0=x-mg,by0=y-mg,bx1=x+size+mg,by1=y+size+mg;
   if(Lb){bx0=Math.min(bx0,Lb.start-0.8);bx1=Math.max(bx1,Lb.start+Lb.W+0.8);by1=Math.max(by1,Lb.top+Lb.f*1.05+0.6)}
@@ -13160,7 +13163,8 @@ function buildSlots(){
       (ty==='url'?'<input class="pat" type="text" autocomplete="off" spellcheck="false" aria-label="Enlace o archivo del QR '+(i+1)+'">'+
         '<div class="row tim"><input class="ts" type="text" inputmode="numeric" placeholder="Empieza en (min:seg)" aria-label="Momento de inicio del audio, minutos:segundos" title="Momento en que empieza el audio, por ejemplo 1:35"><input class="te" type="text" inputmode="numeric" placeholder="Termina en" aria-label="Momento final del audio, minutos:segundos" title="Momento en que se detiene, por ejemplo 2:10"></div>':'<div class="flds"></div>')+
       '<div class="encoded"></div>'+
-      '<div class="row"><input class="lab" type="text" placeholder="Texto debajo" aria-label="Texto debajo del QR '+(i+1)+'">'+
+      '<input class="lab" type="text" placeholder="Texto junto al QR (opcional)" aria-label="Texto junto al QR '+(i+1)+'" style="margin-top:6px">'+
+      '<div class="row"><select class="lpos" aria-label="Posición del texto del QR '+(i+1)+'"><option value="below">Texto debajo</option><option value="side">Texto al lado</option></select>'+
       '<select class="pgs" aria-label="Página del QR '+(i+1)+'"><option value="first">1.ª página</option><option value="last">Última página</option><option value="all">Todas</option><option value="n">Página…</option></select>'+
       '<input class="pgn" type="number" min="1" aria-label="Número de página"></div>';
     var q=function(c){return el.querySelector(c)};
@@ -13171,7 +13175,8 @@ function buildSlots(){
       q('.ts').oninput=function(){s.data.ts=this.value;persist();refresh()};
       q('.te').oninput=function(){s.data.te=this.value;persist();refresh()};
     }else buildFields(q('.flds'),s,i);
-    q('.lab').value=s.label;q('.pgs').value=s.page;q('.pgn').value=s.pageN;
+    q('.lab').value=s.label;q('.lpos').value=s.labelPos==='side'?'side':'below';
+    q('.lpos').onchange=function(){s.labelPos=this.value;persist();refresh()};q('.pgs').value=s.page;q('.pgn').value=s.pageN;
     q('.x').disabled=S.slots.length<2;
     el.addEventListener('focusin',function(){setSel(i)});
     el.addEventListener('pointerdown',function(e){if(e.target.tagName!=='BUTTON')setSel(i)});
