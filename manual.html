@@ -148,12 +148,21 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li>El texto usa la letra Helvetica, que admite acentos, ñ, ç y «·». Los caracteres que no puede escribir se cambian por «?» y el programa avisa.</li>
 </ul>
 
+<h3>Audio desde un momento concreto</h3>
+<p>Debajo del enlace de cada QR hay dos casillas: <b>Empieza en</b> y <b>Termina en</b>. Sirven para que el audio empiece (y, si quieres, se pare) en un momento concreto. Así, con un solo MP3 de toda la obra, cada QR puede llevar a su movimiento: el QR del <i>Gloria</i> en la página 3, el del <i>Credo</i> en la 7…</p>
+<ul>
+<li>Escribe el tiempo como <b>minutos:segundos</b> (<code>1:35</code>), en segundos (<code>95</code>) o con horas (<code>1:02:03</code>).</li>
+<li>El programa añade al enlace la marca estándar <code>#t=</code>. Por ejemplo, <code>misa.mp3</code> empezando en 1:35 se codifica como <code>misa.mp3#t=95</code>; con final en 2:10, como <code>misa.mp3#t=95,130</code>.</li>
+<li>Solo funciona con <b>enlaces directos al archivo</b> (que terminan en <code>.mp3</code>, <code>.m4a</code>…). Con Drive, Dropbox o una página web no hace nada y el programa avisa.</li>
+</ul>
+<div class="note">Funciona en Chrome y en la mayoría de navegadores de Android, pero <b>no todos los móviles lo respetan</b>; en iPhone puede empezar desde el principio. Pruébalo en tu móvil antes de imprimir. Si necesitas que funcione siempre, la alternativa segura es cortar un MP3 por movimiento.</div>
+
 <h2 id="tipos">7. Otros tipos de QR</h2>
 <p>Además de enlaces web, cada QR puede llevar otro contenido. Se elige en el desplegable que hay junto a «QR 1», «QR 2»…</p>
 <table>
 <tr><th>Tipo</th><th>Qué pasa al escanearlo</th><th>Datos</th></tr>
 <tr><td>Enlace web</td><td>Abre la página o el audio.</td><td>La dirección (con dirección base y <code>{nombre}</code>, apartado 5).</td></tr>
-<tr><td>Texto</td><td>Muestra el texto en el móvil.</td><td>Cualquier texto: instrucciones, letra breve, avisos…</td></tr>
+<tr><td>Texto</td><td>Muestra el texto en el móvil, <b>sin necesidad de internet</b>.</td><td>Cualquier texto: letra traducida, indicaciones de interpretación, una nota del programa…</td></tr>
 <tr><td>Wifi</td><td>Ofrece conectarse a la red sin escribir la contraseña.</td><td>Nombre de la red, seguridad, contraseña y si la red está oculta.</td></tr>
 <tr><td>Contacto</td><td>Ofrece guardar el contacto en la agenda.</td><td>Nombre, apellidos, centro, cargo, teléfono, correo, web, dirección y nota.</td></tr>
 <tr><td>Correo</td><td>Abre un correo nuevo ya escrito.</td><td>Destinatario, asunto y mensaje.</td></tr>
@@ -172,6 +181,13 @@ footer{margin-top:36px;font-size:13.5px;color:var(--mut)}
 <li>Cuantos más datos, más denso sale el QR. Un contacto completo necesita unos 25-30 mm de lado; el programa avisa si queda justo.</li>
 </ul>
 <figure><img src="img/tipos.png" alt="Dos QR: uno de evento y otro de wifi, con sus campos"><figcaption>Un QR de evento («Concierto») y otro de wifi en la misma partitura. Bajo los campos se ve lo que se codifica.</figcaption></figure>
+<h3>Texto que funciona sin conexión</h3>
+<p>Un QR de texto lleva el contenido dentro del propio código, así que se lee aunque no haya cobertura, por ejemplo en una iglesia o un auditorio. Ideas: la traducción de la letra, una nota sobre la obra o el compositor, indicaciones de interpretación o la solución de un ejercicio.</p>
+<ul>
+<li>Bajo el cuadro de texto se cuenta cuántos caracteres lleva. Para un QR de unos 20-25 mm conviene no pasar de <b>150 caracteres</b>; con más, agranda el QR o el programa avisará de que queda justo para imprimir.</li>
+<li>Admite acentos, ñ y saltos de línea.</li>
+<li>En Android la cámara suele mostrar el texto completo. En iPhone, la cámara a veces solo ofrece buscarlo en internet; en ese caso se lee bien con cualquier app lectora de QR.</li>
+</ul>
 <div class="note">La <b>contraseña del wifi no se guarda</b> en el navegador ni en las posiciones guardadas, así que hay que escribirla de nuevo cada vez que abres el programa. Recuerda que cualquiera que escanee el QR podrá conectarse a esa red.</div>
 
 <h2 id="avisos">8. Avisos y comprobación</h2>

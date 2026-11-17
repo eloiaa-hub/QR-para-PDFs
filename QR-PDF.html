@@ -53,6 +53,7 @@ code{font-size:12px;background:var(--soft);padding:0 3px;border-radius:3px}
 .slotHead .x{padding:1px 7px;font-size:12px}
 .slot .row{margin-top:6px}
 .slot .pgn{width:64px;flex:none}
+.slot .tim input{font-size:13px;padding:4px 6px}
 .slotHead .typ{width:auto;padding:2px 4px;font-size:12.5px;margin-left:4px}
 .flds{display:grid;grid-template-columns:1fr;gap:5px}
 .flds .fld{min-width:0}
@@ -286,11 +287,13 @@ kbd{font:inherit;font-size:12px;padding:0 5px;border:1px solid var(--line);borde
     <ul>
       <li>«+ Añadir otro QR» sirve, por ejemplo, para un audio por movimiento o por voz (soprano, contralto…).</li>
       <li>Cada QR tiene su enlace, su texto y su página (primera, última, todas o una en concreto). Pulsa un QR para elegirlo y moverlo.</li>
+      <li><b>Empieza en</b> (min:seg) hace que el audio empiece en ese momento, por ejemplo en un movimiento concreto de un MP3 con toda la obra. Solo funciona con enlaces directos al archivo; pruébalo en tu móvil.</li>
       <li>El <b>texto</b> se escribe debajo del QR, con un icono de altavoz si quieres. También admite <code>{nombre}</code>.</li>
     </ul>
     <h3>Tipos de QR</h3>
     <ul>
       <li>En el desplegable de cada QR eliges qué lleva: <b>enlace web</b> (lo normal para el audio), <b>texto</b>, <b>wifi</b>, <b>contacto</b>, <b>correo</b>, <b>teléfono</b>, <b>SMS</b>, <b>WhatsApp</b>, <b>ubicación</b> o <b>evento</b> de calendario.</li>
+      <li>Un QR de <b>texto</b> se lee sin internet: sirve para la letra traducida, indicaciones o una nota del programa. Mejor que sea breve.</li>
       <li>Rellena los datos y debajo verás exactamente lo que se codifica. En los campos de texto también vale <code>{nombre}</code>.</li>
       <li>La dirección base, la tabla de enlaces y el icono de altavoz solo se aplican a los QR de enlace web.</li>
       <li>«Probar» abre el correo, el teléfono, WhatsApp o el mapa; en contacto y evento descarga el archivo (.vcf o .ics) para que lo abras.</li>
@@ -12878,7 +12881,7 @@ function phone(v){return String(v||'').replace(/[^\d+]/g,'')}
 function icsDate(v){var m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(v||'');return m?m[1]+m[2]+m[3]+'T'+m[4]+m[5]+'00':''}
 var TYPES={
   url:{n:'Enlace web'},
-  text:{n:'Texto',f:[F('text','Texto',{area:1})],
+  text:{n:'Texto',f:[F('text','Texto',{area:1,rows:5,ph:'Funciona sin internet: letra traducida, indicaciones, notas…'})],
     build:function(d){return d.text?{t:d.text}:{need:'Escribe el texto.'}}},
   wifi:{n:'Wifi',f:[F('ssid','Nombre de la red'),F('sec','Seguridad',{opts:[['WPA','WPA / WPA2 / WPA3'],['WEP','WEP (antigua)'],['nopass','Sin contraseña']]}),F('pass','Contraseña',{ph:'No se guarda en el navegador'}),F('hidden','Red oculta',{check:1})],
     build:function(d){
@@ -12930,6 +12933,13 @@ var TYPES={
       return r;
     }}
 };
+// Tiempos: «95», «1:35» o «1:02:03» → segundos (NaN si no se entiende)
+function parseT(v){
+  v=String(v==null?'':v).trim().replace(',','.');if(!v)return 0;
+  if(!/^\d+(\.\d+)?$|^\d+:\d{1,2}(\.\d+)?$|^\d+:\d{1,2}:\d{1,2}(\.\d+)?$/.test(v))return NaN;
+  return v.split(':').reduce(function(a,p){return a*60+parseFloat(p)},0);
+}
+function fmtT(n){return String(Math.round(n*10)/10)}
 function typeOf(s){return TYPES[s&&s.type]?s.type:'url'}
 
 /* ================= Enlaces ================= */
@@ -12960,9 +12970,19 @@ function resolve(doc,si){
     else raw='https://'+raw;
   }
   var url;try{url=new URL(raw).href}catch(e){url=raw}
+  var tw=null,ts=parseT(s.data&&s.data.ts),te=parseT(s.data&&s.data.te);
+  if(isNaN(ts)||isNaN(te))tw='Escribe el tiempo como minutos:segundos, por ejemplo 1:35.';
+  else if(ts>0||te>0){
+    if(url.indexOf('#')>=0)tw='El enlace ya lleva «#»: no se le puede añadir el momento de inicio.';
+    else{
+      url+='#t='+fmtT(ts)+(te>0?','+fmtT(te):'');
+      if(te>0&&ts>=te)tw='El final es anterior al inicio: revisa los tiempos.';
+      else if(!/\.(mp3|m4a|aac|ogg|oga|opus|wav|flac|webm|mp4)#/i.test(url))tw='El momento de inicio solo funciona con enlaces directos al archivo de audio (que terminan en .mp3, .m4a…), no con Drive, Dropbox ni páginas web.';
+    }
+  }
   var q=qrFor(url);
   if(q.err)return {url:url,err:'largo',over:!!ov};
-  return {url:url,qr:q,over:!!ov,kind:'url',open:true};
+  return {url:url,qr:q,over:!!ov,kind:'url',open:true,warn:tw};
 }
 function labelText(doc,si){var s=S.slots[si];return s?sanitize(s.label.split('{nombre}').join(nameOf(doc)).trim()):''}
 function targets(s,n){
@@ -13137,14 +13157,20 @@ function buildSlots(){
     var el=document.createElement('div');el.className='slot';el.dataset.i=i;
     var ty=typeOf(s);
     el.innerHTML='<div class="slotHead"><b>QR '+(i+1)+'</b><select class="typ" aria-label="Tipo del QR '+(i+1)+'">'+Object.keys(TYPES).map(function(k){return '<option value="'+k+'">'+TYPES[k].n+'</option>'}).join('')+'</select><span class="sp"></span><button class="x" title="Quitar este QR" aria-label="Quitar el QR '+(i+1)+'">✕</button></div>'+
-      (ty==='url'?'<input class="pat" type="text" autocomplete="off" spellcheck="false" aria-label="Enlace o archivo del QR '+(i+1)+'">':'<div class="flds"></div>')+
+      (ty==='url'?'<input class="pat" type="text" autocomplete="off" spellcheck="false" aria-label="Enlace o archivo del QR '+(i+1)+'">'+
+        '<div class="row tim"><input class="ts" type="text" inputmode="numeric" placeholder="Empieza en (min:seg)" aria-label="Momento de inicio del audio, minutos:segundos" title="Momento en que empieza el audio, por ejemplo 1:35"><input class="te" type="text" inputmode="numeric" placeholder="Termina en" aria-label="Momento final del audio, minutos:segundos" title="Momento en que se detiene, por ejemplo 2:10"></div>':'<div class="flds"></div>')+
       '<div class="encoded"></div>'+
       '<div class="row"><input class="lab" type="text" placeholder="Texto debajo" aria-label="Texto debajo del QR '+(i+1)+'">'+
       '<select class="pgs" aria-label="Página del QR '+(i+1)+'"><option value="first">1.ª página</option><option value="last">Última página</option><option value="all">Todas</option><option value="n">Página…</option></select>'+
       '<input class="pgn" type="number" min="1" aria-label="Número de página"></div>';
     var q=function(c){return el.querySelector(c)};
     q('.typ').value=ty;
-    if(ty==='url')q('.pat').value=s.pattern;else buildFields(q('.flds'),s,i);
+    s.data=s.data||{};
+    if(ty==='url'){
+      q('.pat').value=s.pattern;q('.ts').value=s.data.ts||'';q('.te').value=s.data.te||'';
+      q('.ts').oninput=function(){s.data.ts=this.value;persist();refresh()};
+      q('.te').oninput=function(){s.data.te=this.value;persist();refresh()};
+    }else buildFields(q('.flds'),s,i);
     q('.lab').value=s.label;q('.pgs').value=s.page;q('.pgn').value=s.pageN;
     q('.x').disabled=S.slots.length<2;
     el.addEventListener('focusin',function(){setSel(i)});
@@ -13168,7 +13194,7 @@ function buildFields(box,s,i){
       var c=w.querySelector('input');c.checked=!!v;c.onchange=function(){s.data[f.k]=this.checked;persist();refresh()};
     }else{
       var tag=f.area?'textarea':f.opts?'select':'input';
-      w.innerHTML='<label for="'+id+'">'+esc(f.l)+'</label><'+tag+' id="'+id+'"'+(f.area?' rows="2"':'')+'></'+tag+'>';
+      w.innerHTML='<label for="'+id+'">'+esc(f.l)+'</label><'+tag+' id="'+id+'"'+(f.area?' rows="'+(f.rows||2)+'"':'')+'></'+tag+'>';
       var e=w.querySelector(tag);
       if(f.opts)e.innerHTML=f.opts.map(function(o){return '<option value="'+o[0]+'">'+esc(o[1])+'</option>'}).join('');
       else{if(!f.area)e.type=f.dt?'datetime-local':f.tel?'tel':f.email?'email':'text';e.setAttribute('autocomplete','off');e.spellcheck=false;if(f.ph)e.placeholder=f.ph}
@@ -13208,7 +13234,7 @@ function updateSlotCards(){
     el.querySelector('.pgn').hidden=s.page!=='n';
     var r=resolve(d,i),enc=el.querySelector('.encoded'),t='';
     if(typeOf(s)!=='url'){
-      if(r.url)t='Se codifica: '+(r.url.length>220?r.url.slice(0,220)+'…':r.url);
+      if(r.url){var nc=Array.from(r.url).length;t='Se codifica ('+nc+' caracteres): '+(r.url.length>220?r.url.slice(0,220)+'…':r.url)}
       else if(r.err==='falta')t=r.need;
       else if(r.err==='nombre')t='Usa {nombre}: abre una partitura para ver el contenido.';
       enc.textContent=t;enc.hidden=!t;enc.style.whiteSpace='pre-wrap';return;

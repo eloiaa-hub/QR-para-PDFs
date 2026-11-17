@@ -17,6 +17,8 @@ Añade un código QR con el enlace a un audio (por ejemplo, un MP3 subido a inte
 - **Dirección base y `{nombre}`:** cada partitura enlaza sola con su audio (`Ave Maria.pdf` → `…/audios/Ave%20Maria.mp3`). Una tabla de enlaces permite cambiar el de una sola partitura, e importar o exportar la lista en CSV.
 - **Varios QR por partitura:** hasta 8 (por movimiento, por voz…), cada uno con su enlace, su texto y su página (primera, última, todas o una concreta).
 - **Tipos de QR:** enlace web, texto, wifi, contacto (vCard), correo, teléfono, SMS, WhatsApp, ubicación (Google Maps) y evento de calendario. La contraseña del wifi no se guarda en el navegador.
+- **Audio desde un momento concreto:** «Empieza en» y «Termina en» (min:seg) añaden `#t=` al enlace, para que cada QR lleve a su movimiento dentro de un mismo MP3.
+- **Texto sin conexión:** un QR de texto se lee sin internet (letra traducida, notas, indicaciones), con contador de caracteres.
 - **Texto bajo el QR:** por ejemplo «Escuchar» o «Soprano», con un icono de altavoz si se quiere.
 - **Avisos:** marca en rojo los QR que tapan notas, texto o pentagramas, o que se solapan entre sí, y avisa si el QR queda demasiado pequeño.
 - **Comprobación:** al guardar vuelve a leer cada QR del PDF nuevo y confirma que lleva el enlace correcto.
